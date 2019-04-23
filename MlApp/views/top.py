@@ -11,12 +11,20 @@ def work(request):
 def execution(request):
     data = request.POST["data"]
     testFile = request.POST["testFile"]
-    radio = request.POST["exOp"]
+    exOp = request.POST["exOp"]
 
-    msg = "結果メッセージ"
+    msg = "default"
+    if exOp == "1" :
+        msg = "訓練結果"
+
+    else :
+        msg = "テスト結果"
+
 
     template = loader.get_template("top.html")
     context = {
+        "data": data,
+        "testFile": testFile,
         "msg": msg,
     }
 
