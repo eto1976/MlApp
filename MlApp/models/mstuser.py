@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Mstuser(models.Model):
+class Mst_user(models.Model):
     """
     Mstuser to do.
     """

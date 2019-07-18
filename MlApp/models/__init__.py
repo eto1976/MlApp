@@ -1,1 +1,1 @@
-from MlApp.models.mstuser import Mstuser
+from MlApp.models.mstuser import Mst_user
