@@ -5,6 +5,9 @@ class Mst_user(models.Model):
     """
     Mstuser to do.
     """
+    class Meta:
+            db_table = 'mst_user' # 使用テーブル
+
     id = models.CharField(primary_key=True,max_length=5)
     name = models.CharField(max_length=20)
     password = models.CharField(max_length=20)

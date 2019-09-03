@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.template import loader
 
 from MlApp.models.mstuser import Mst_user
+from MlApp.models.mstimagelabel import Mst_imagelabel
 
+debugMode = '1'
 
 def index(request):
 
@@ -15,15 +17,33 @@ def login(request):
     password = request.POST["password"]
 
     userInfo = []
+    imagelabel = []
+    msg = ""
+
+    # ユーザ情報取得
+    for objuser in Mst_user.objects.filter(id = username):
+        userInfo.append(objuser)
+
+    # ラベルプルダウンリスト取得
+    for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass = ""):
+        imagelabel.append(objimagelabel)
 
 
-#    for obj in Mst_user.objects.all():
-#        userInfo.append(obj)
+    # ユーザ認証 ※デバック時はスキップ
+    if debugMode == '0':
 
-    template = loader.get_template("top.html")
+        if len(userInfo) > 0 and userInfo[0].password == password :
+            template = loader.get_template("top.html")
+        else :
+            template = loader.get_template("index.html")
+            msg = "ユーザIDまたはパスワードが不正です。"
+    else :
+            template = loader.get_template("top.html")
+
     context = {
         "username": username,
         "password": password,
+        "msg": msg,
     }
 
     return HttpResponse(template.render(context, request))
