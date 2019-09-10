@@ -2,8 +2,8 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
-from MlApp.models.mstuser import Mst_user
 from MlApp.models.mstimagelabel import Mst_imagelabel
+from MlApp.models.mstuser import Mst_user
 
 debugMode = '1'
 
@@ -25,7 +25,7 @@ def login(request):
         userInfo.append(objuser)
 
     # ラベルプルダウンリスト取得
-    for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass = ""):
+    for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
         imagelabel.append(objimagelabel)
 
 

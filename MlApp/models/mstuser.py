@@ -5,9 +5,6 @@ class Mst_user(models.Model):
     """
     Mstuser to do.
     """
-    class Meta:
-            db_table = 'mst_user' # 使用テーブル
-
     id = models.CharField(primary_key=True,max_length=5)
     name = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
@@ -15,3 +12,10 @@ class Mst_user(models.Model):
     adminflg = models.CharField(max_length=1)
     createdate = models.DateTimeField()
     updatedate = models.DateTimeField()
+
+    class Meta:
+            managed = False
+            db_table = 'mst_user' # 使用テーブル
+
+    def __str__(self):
+        return self.id
