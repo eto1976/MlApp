@@ -5,6 +5,8 @@ from django.template import loader
 from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.models.mstuser import Mst_user
 
+from MlApp.forms.indexform import IndexForm
+
 debugMode = '1'
 
 def index(request):
@@ -13,8 +15,10 @@ def index(request):
 
 def login(request):
 
-    username = request.POST["username"]
-    password = request.POST["password"]
+    form = IndexForm(request.POST or None)
+
+    username = form.data['username']
+    password = form.data['password']
 
     userInfo = []
     imagelabel = []
@@ -27,7 +31,6 @@ def login(request):
     # ラベルプルダウンリスト取得
     for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
         imagelabel.append(objimagelabel)
-
 
     # ユーザ認証 ※デバック時はスキップ
     if debugMode == '0':
