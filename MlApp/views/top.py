@@ -2,6 +2,9 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
+from MlApp.forms.topform import TopForm
+
+
 def top(request):
     return render(request,'top.html')
 
@@ -9,12 +12,18 @@ def work(request):
     return render(request,'work.html')
 
 def execution(request):
-    data = request.POST["data"]
-    testFile = request.POST["testFile"]
-    exOp = request.POST["exOp"]
+
+    form = TopForm(request.POST or None)
+
+    data = form.data['data']
+    testFile = form.data['testFile']
+    exOp = form.data['exOp']
 
     msg = "default"
     if exOp == "1" :
+
+
+
         msg = "訓練結果"
 
     else :
