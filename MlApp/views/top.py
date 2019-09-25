@@ -2,6 +2,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
+from MlApp.batch.imagelearnLogic import ImagelearnLogic
 from MlApp.forms.topform import TopForm
 
 
@@ -15,26 +16,28 @@ def execution(request):
 
     form = TopForm(request.POST or None)
 
-    data = form.data['data']
-    testFile = form.data['testFile']
     exOp = form.data['exOp']
 
     msg = "default"
     if exOp == "1" :
 
+        # 画像学習処理
+        msg = ImagelearnLogic.imageleanExec(form)
 
+    elif exOp == "2" :
 
-        msg = "訓練結果"
+        # 画像判定処理
+        msg = ImagelearnLogic.imageJudgmentExec(form)
 
     else :
-        msg = "テスト結果"
+        print("未処理")
 
+    # From値のセット
+    form.msg = msg
 
     template = loader.get_template("top.html")
     context = {
-        "data": data,
-        "testFile": testFile,
-        "msg": msg,
+        "topForm": form,
     }
 
     return HttpResponse(template.render(context, request))

@@ -1,1 +1,1 @@
-from MlApp.batch.imagelearnLogic import imageleanExec
+from MlApp.batch.imagelearnLogic import ImagelearnLogic

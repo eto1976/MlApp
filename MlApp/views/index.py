@@ -1,13 +1,14 @@
+from django.conf import settings
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
+from MlApp.forms.indexform import IndexForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.models.mstuser import Mst_user
 
-from MlApp.forms.indexform import IndexForm
-
-debugMode = '1'
+# デバックモード取得
+debugMode = getattr(settings, "DEBUG", None)
 
 def index(request):
 
@@ -33,7 +34,7 @@ def login(request):
         imagelabel.append(objimagelabel)
 
     # ユーザ認証 ※デバック時はスキップ
-    if debugMode == '0':
+    if debugMode != True:
 
         if len(userInfo) > 0 and userInfo[0].password == password :
             template = loader.get_template("top.html")
