@@ -92,6 +92,8 @@ class ImagelearnLogic:
 
         except FileNotFoundError:
                             return "訓練データフォルダまたはファイルがありません。"
+        except NotADirectoryError:
+                            return "訓練データフォルダまたはファイルがありません。"
 
 
     # データ判定
@@ -99,7 +101,7 @@ class ImagelearnLogic:
 
         try:
             # フォームからフォルダパスを取得
-            data = self.data['data']
+            data = self.data['dataFolder']
             TRAIN_DIR = self.data['testFile']
 
             # settingsからMLAPPのパスを取得
@@ -154,6 +156,8 @@ class ImagelearnLogic:
                 print("seikai: ", ok_count / total * 100, "%")
 
         except FileNotFoundError:
+                            return "判定データフォルダまたはファイルがありません。"
+        except NotADirectoryError:
                             return "判定データフォルダまたはファイルがありません。"
 
 

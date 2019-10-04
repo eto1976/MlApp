@@ -16,9 +16,11 @@ def execution(request):
 
     form = TopForm(request.POST or None)
 
+    dataFolder = form.data['dataFolder']
+    testFile = form.data['testFile']
     exOp = form.data['exOp']
+    msg = form.data['msg']
 
-    msg = "default"
     if exOp == "1" :
 
         # 画像学習処理
@@ -30,14 +32,15 @@ def execution(request):
         msg = ImagelearnLogic.imageJudgmentExec(form)
 
     else :
-        print("未処理")
+        msg = "実行に失敗しました。"
 
     # From値のセット
-    form.msg = msg
 
     template = loader.get_template("top.html")
     context = {
-        "topForm": form,
+        "dataFolder": dataFolder,
+        "testFile": testFile,
+        "msg": msg,
     }
 
     return HttpResponse(template.render(context, request))

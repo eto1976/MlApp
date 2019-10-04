@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.template import loader
 
 from MlApp.forms.indexform import IndexForm
+from MlApp.forms.topform import TopForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.models.mstuser import Mst_user
 
@@ -17,6 +18,7 @@ def index(request):
 def login(request):
 
     form = IndexForm(request.POST or None)
+    topform = TopForm()
 
     username = form.data['username']
     password = form.data['password']
@@ -48,6 +50,7 @@ def login(request):
         "username": username,
         "password": password,
         "msg": msg,
+        "topForm": topform,
     }
 
     return HttpResponse(template.render(context, request))

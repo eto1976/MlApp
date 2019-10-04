@@ -11,10 +11,12 @@
 
         <div class="form-group">
             <label>データフォルダ ※該当フォルダまでのフルパス記載</label>
-            <input type="text" name="data" class="form-control" >
+            <input type="text" name="dataFolder" class="form-control" value={{ dataFolder }} >
         </div>
 
+
 		<div class="dropdown">
+{{ topForm.category }}
 			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 				データラベル階層1
 				<span class="caret"></span>
@@ -48,11 +50,12 @@
         <div class="form-group">
 		    <label>単一テストファイル指定 ※単一ファイル指定時は指定ファイルテストを優先</label>
 		    <input type="file" name="testFile" class="form-control-file" >
+		    <!-- file属性にvalueはセットできない -->
         </div>
 <BR>
 <BR>
 		<div class="form-check form-check-inline">
-		  <input class="form-check-input" type="radio" name="exOp" id="train" value="1" required >
+		  <input class="form-check-input" type="radio" name="exOp" id="train" value="1" required checked="checked" >
 		  <label class="form-check-label" for="train">訓練</label>
 		</div>
 		<div class="form-check form-check-inline">
@@ -64,7 +67,7 @@
 
         <div class="form-group">
             <label>実行結果</label>
-			<textarea name="msg" class="form-control" rows="3" readonly >{{ topForm.msg }}</textarea>
+			<textarea name="msg" class="form-control" rows="3" readonly >{{ msg }}</textarea>
         </div>
 
     </form>

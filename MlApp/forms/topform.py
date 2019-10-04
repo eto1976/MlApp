@@ -1,10 +1,16 @@
 from django import forms
 
 # Create your forms here.
+
+CATEGORIES = (
+    ('1', '果物'),
+    ('2', '野菜'),
+)
+
 class TopForm(forms.Form):
 
-    data = forms.CharField(
-        label='data',
+    dataFolder = forms.CharField(
+        label='dataFolder',
         max_length=260,
         required=True,
     )
@@ -23,6 +29,10 @@ class TopForm(forms.Form):
 
     msg = forms.CharField(
         label='msg',
-        max_length=999,
         required=True,
+        widget=forms.Textarea,
     )
+
+    category = forms.ChoiceField(
+        choices=CATEGORIES,
+        widget=forms.Select(attrs={'class':'bootstrap-select'}))
