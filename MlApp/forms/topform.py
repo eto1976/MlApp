@@ -1,10 +1,31 @@
 from django import forms
+from MlApp.models.mstimagelabel import Mst_imagelabel
 
 # Create your forms here.
 
-CATEGORIES = (
+EMPTY_CHOICES_1 = (
+    ('', '-----ラベル階層1-----'),
+)
+EMPTY_CHOICES_2 = (
+    ('', '-----ラベル階層2-----'),
+)
+EMPTY_CHOICES_3 = (
+    ('', '-----ラベル階層3-----'),
+)
+
+CATEGORIES_1 = (
     ('1', '果物'),
     ('2', '野菜'),
+)
+
+CATEGORIES_2 = (
+    ('1', 'りんご'),
+    ('2', 'みかん'),
+)
+
+CATEGORIES_3 = (
+    ('1', 'りんご1等級'),
+    ('2', 'りんご2等級'),
 )
 
 class TopForm(forms.Form):
@@ -33,6 +54,14 @@ class TopForm(forms.Form):
         widget=forms.Textarea,
     )
 
-    category = forms.ChoiceField(
-        choices=CATEGORIES,
+    category_1 = forms.ChoiceField(
+        choices=EMPTY_CHOICES_1 + CATEGORIES_1,
+        widget=forms.Select(attrs={'class':'bootstrap-select'}))
+
+    category_2 = forms.ChoiceField(
+        choices=EMPTY_CHOICES_2 + CATEGORIES_2,
+        widget=forms.Select(attrs={'class':'bootstrap-select'}))
+
+    category_3 = forms.ChoiceField(
+        choices=EMPTY_CHOICES_3 + CATEGORIES_3,
         widget=forms.Select(attrs={'class':'bootstrap-select'}))
