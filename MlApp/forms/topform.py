@@ -13,19 +13,36 @@ EMPTY_CHOICES_3 = (
     ('', '-----ラベル階層3-----'),
 )
 
+imagelabel_ct1 = []
+imagelabel_ct2 = []
+imagelabel_ct3 = []
+
+#カテゴリー1
+for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
+    imagelabel_ct1.append(objimagelabel)
+
 CATEGORIES_1 = (
-    ('1', '果物'),
-    ('2', '野菜'),
+    (imagelabel_ct1[0].labelclass, imagelabel_ct1[0].labelclassname),
+    (imagelabel_ct1[1].labelclass, imagelabel_ct1[1].labelclassname),
 )
+
+#カテゴリー2
+for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass='F01'):
+    imagelabel_ct2.append(objimagelabel)
 
 CATEGORIES_2 = (
-    ('1', 'りんご'),
-    ('2', 'みかん'),
+    (imagelabel_ct2[0].labelclass, imagelabel_ct2[0].labelclassname),
 )
 
+#カテゴリー2
+
+for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass='A01'):
+    imagelabel_ct3.append(objimagelabel)
+
 CATEGORIES_3 = (
-    ('1', 'りんご1等級'),
-    ('2', 'りんご2等級'),
+    (imagelabel_ct3[0].labelclass, imagelabel_ct3[0].labelclassname),
+    (imagelabel_ct3[1].labelclass, imagelabel_ct3[1].labelclassname),
+    (imagelabel_ct3[2].labelclass, imagelabel_ct3[2].labelclassname),
 )
 
 class TopForm(forms.Form):
