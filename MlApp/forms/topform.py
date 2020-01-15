@@ -13,37 +13,50 @@ EMPTY_CHOICES_3 = (
     ('', '-----ラベル階層3-----'),
 )
 
+#イメージラベルオブジェクト
 imagelabel_ct1 = []
 imagelabel_ct2 = []
 imagelabel_ct3 = []
 
 #カテゴリー1
+CATEGORIES_1 = ()
+
 for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
     imagelabel_ct1.append(objimagelabel)
 
-CATEGORIES_1 = (
-    (imagelabel_ct1[0].labelclass, imagelabel_ct1[0].labelclassname),
-    (imagelabel_ct1[1].labelclass, imagelabel_ct1[1].labelclassname),
-)
+for imagelabel_ct1_obj in imagelabel_ct1:
+    CATEGORIES_1_GET = (
+        (imagelabel_ct1_obj.labelclass, imagelabel_ct1_obj.labelclassname),
+    )
+
+    CATEGORIES_1 = CATEGORIES_1 + CATEGORIES_1_GET
 
 #カテゴリー2
+CATEGORIES_2 = ()
+
 for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass='F01'):
     imagelabel_ct2.append(objimagelabel)
 
-CATEGORIES_2 = (
-    (imagelabel_ct2[0].labelclass, imagelabel_ct2[0].labelclassname),
-)
+for imagelabel_ct2_obj in imagelabel_ct2:
+    CATEGORIES_2_GET = (
+        (imagelabel_ct2_obj.labelclass, imagelabel_ct2_obj.labelclassname),
+    )
 
-#カテゴリー2
+    CATEGORIES_2 = CATEGORIES_2 + CATEGORIES_2_GET
+
+#カテゴリー3
+CATEGORIES_3 = ()
 
 for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass='A01'):
     imagelabel_ct3.append(objimagelabel)
 
-CATEGORIES_3 = (
-    (imagelabel_ct3[0].labelclass, imagelabel_ct3[0].labelclassname),
-    (imagelabel_ct3[1].labelclass, imagelabel_ct3[1].labelclassname),
-    (imagelabel_ct3[2].labelclass, imagelabel_ct3[2].labelclassname),
-)
+for imagelabel_ct3_obj in imagelabel_ct3:
+    CATEGORIES_3_GET = (
+        (imagelabel_ct3_obj.labelclass, imagelabel_ct3_obj.labelclassname),
+    )
+
+    CATEGORIES_3 = CATEGORIES_3 + CATEGORIES_3_GET
+
 
 class TopForm(forms.Form):
 

@@ -5,7 +5,6 @@ from django.template import loader
 
 from MlApp.forms.indexform import IndexForm
 from MlApp.forms.topform import TopForm
-from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.models.mstuser import Mst_user
 
 # デバックモード取得
@@ -24,16 +23,11 @@ def login(request):
     password = form.data['password']
 
     userInfo = []
-    imagelabel = []
     msg = ""
 
     # ユーザ情報取得
     for objuser in Mst_user.objects.filter(id = username):
         userInfo.append(objuser)
-
-    # ラベルプルダウンリスト取得
-    for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
-        imagelabel.append(objimagelabel)
 
     # ユーザ認証 ※デバック時はスキップ
     if debugMode != True:
