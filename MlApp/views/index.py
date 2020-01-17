@@ -5,7 +5,9 @@ from django.template import loader
 
 from MlApp.forms.indexform import IndexForm
 from MlApp.forms.topform import TopForm
+from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.models.mstuser import Mst_user
+
 
 # デバックモード取得
 debugMode = getattr(settings, "DEBUG", None)
@@ -16,6 +18,7 @@ def index(request):
 
 def login(request):
 
+    #フォーム取得と初期化
     form = IndexForm(request.POST or None)
     topform = TopForm()
 
@@ -37,8 +40,37 @@ def login(request):
         else :
             template = loader.get_template("index.html")
             msg = "ユーザIDまたはパスワードが不正です。"
+
+            context = {
+                "msg": msg,
+            }
+            return HttpResponse(template.render(context, request))
+
     else :
             template = loader.get_template("top.html")
+
+
+    #プルダウン初期値追加
+    #カテゴリー1
+    imagelabel_ct1 = []
+    CATEGORIES_1 = ()
+
+    for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
+        imagelabel_ct1.append(objimagelabel)
+
+    for imagelabel_ct1_obj in imagelabel_ct1:
+        CATEGORIES_1_GET = (
+            (imagelabel_ct1_obj.labelclass, imagelabel_ct1_obj.labelclassname),
+        )
+
+        CATEGORIES_1 = CATEGORIES_1 + CATEGORIES_1_GET
+
+    #選択肢追加
+    EMPTY_CHOICES_1 = (
+        ('', '-----ラベル階層1-----'),
+    )
+
+    topform.fields['category_1'].choices = EMPTY_CHOICES_1 + CATEGORIES_1
 
     context = {
         "username": username,

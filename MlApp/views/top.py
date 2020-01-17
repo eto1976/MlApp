@@ -4,6 +4,7 @@ from django.template import loader
 
 from MlApp.batch.imagelearnLogic import ImagelearnLogic
 from MlApp.forms.topform import TopForm
+from MlApp.models.mstimagelabel import Mst_imagelabel
 
 
 def top(request):
@@ -15,7 +16,6 @@ def work(request):
 def execution(request):
 
     form = TopForm(request.POST or None)
-
 
     dataFolder = form.data['dataFolder']
     testFile = form.data['testFile']
@@ -37,6 +37,51 @@ def execution(request):
 
         else :
             msg = "実行に失敗しました。"
+    else :
+        #選択肢動的変更
+        #イメージラベルオブジェクト
+        imagelabel_ct1 = []
+        imagelabel_ct2 = []
+        imagelabel_ct3 = []
+
+        EMPTY_CHOICES_2 = (
+            ('', '-----ラベル階層2-----'),
+        )
+        EMPTY_CHOICES_3 = (
+            ('', '-----ラベル階層3-----'),
+        )
+
+        #カテゴリー2
+        CATEGORIES_2 = ()
+
+        for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass=form.data['category_1']):
+            imagelabel_ct2.append(objimagelabel)
+
+        for imagelabel_ct2_obj in imagelabel_ct2:
+            CATEGORIES_2_GET = (
+                (imagelabel_ct2_obj.labelclass, imagelabel_ct2_obj.labelclassname),
+            )
+
+            CATEGORIES_2 = CATEGORIES_2 + CATEGORIES_2_GET
+
+        #カテゴリー3
+        CATEGORIES_3 = ()
+
+        for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass=form.data['category_2']):
+            imagelabel_ct3.append(objimagelabel)
+
+        for imagelabel_ct3_obj in imagelabel_ct3:
+            CATEGORIES_3_GET = (
+                (imagelabel_ct3_obj.labelclass, imagelabel_ct3_obj.labelclassname),
+            )
+
+            CATEGORIES_3 = CATEGORIES_3 + CATEGORIES_3_GET
+
+        #取得したフィールドの追加
+        form.fields['category_2'].choices = EMPTY_CHOICES_2 + CATEGORIES_2
+        form.fields['category_3'].choices = EMPTY_CHOICES_3 + CATEGORIES_3
+
+
 
     template = loader.get_template("top.html")
     context = {
