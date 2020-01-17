@@ -10,6 +10,10 @@ import numpy as np
 from PIL import Image
 import os
 
+# 学習ファイル定義名
+modelFilePath = '/model/mlapp_model.json'
+h5File = 'mlapp_model_weights.h5'
+
 class ImagelearnLogic:
 
     # データ学習処理
@@ -20,6 +24,8 @@ class ImagelearnLogic:
             TRAIN_DIR = self.data['testFile']
             # settingsからMLAPPのパスを取得
             MLAPP_DIR = getattr(settings, 'MLAPP_DIR', None);
+            #データラベル取得
+            dataLabelCd = self.data['category_1'] + self.data['category_2'] + self.data['category_3']
 
             # 学習用のデータを作る.
             image_list = []
@@ -31,19 +37,14 @@ class ImagelearnLogic:
             if not dir_list or len(dir_list)==0:
                 return "訓練データフォルダまたはファイルがありません。"
 
-                # ./data/train 以下のorange,appleディレクトリ以下の画像を読み込む。
+                # 指定したフォルダ以下の画像を読み込む。
                 for dir in os.listdir(TRAIN_DIR):
 
                     dir1 = TRAIN_DIR + dir
-                    label = 0
-
-                    if dir == "apple":    # appleはラベル0
-                        label = 0
-                    elif dir == "orange": # orangeはラベル1
-                        label = 1
+                    label = dataLabelCd
 
                     for file in os.listdir(dir1):
-                        # 配列label_listに正解ラベルを追加(りんご:0 オレンジ:1)
+                        # 配列label_listに正解ラベルを追加(DBから取得した対象の連結コード)
                         label_list.append(label)
                         filepath = dir1 + "/" + file
                         # 画像を25x25pixelに変換し、1要素が[R,G,B]3要素を含む配列の25x25の２次元配列として読み込む。
@@ -86,9 +87,11 @@ class ImagelearnLogic:
 
                 # 学習結果を保存。
                 model_json_str = model.to_json()
-                mlapp_model_fileName = MLAPP_DIR + '/model/mlapp_model.json'
+                mlapp_model_fileName = MLAPP_DIR + modelFilePath
                 open(mlapp_model_fileName, 'w').write(model_json_str)
-                model.save_weights('mlapp_model_weights.h5');
+                model.save_weights(h5File);
+
+                return "学習処理を実行しました。"
 
         except FileNotFoundError:
                             return "訓練データフォルダまたはファイルがありません。"
@@ -113,24 +116,24 @@ class ImagelearnLogic:
 
             # モデルを読み込む
             model = Sequential()
-            mlapp_model_fileName = MLAPP_DIR + '/model/mlapp_model.json'
+            mlapp_model_fileName = MLAPP_DIR + modelFilePath
 
             model = model_from_json(open(mlapp_model_fileName).read())
             # 学習結果を読み込む
-            model.load_weights('mlapp_model_weights.h5')
+            model.load_weights(h5File)
 
             # ディレクトリが存在しない場合はエラー
             dir_list = os.listdir(TRAIN_DIR)
             if not dir_list or len(dir_list)==0:
                 return "判定データフォルダまたはファイルがありません。"
 
-                # テスト用ディレクトリ(./data/train/)の画像でチェック。正解率を表示する。
+                # フォルダの画像または単一の画像でチェック。正解を表示する。
                 total = 0.
                 ok_count = 0.
 
                 for dir in os.listdir(TRAIN_DIR):
 
-                    dir1 = MLAPP_DIR + "/data/test/" + dir
+                    dir1 = MLAPP_DIR + dir
                     label = 0
 
                     if dir == "apple":
@@ -168,8 +171,9 @@ class ImagelearnLogic:
             # settingsからMLAPPのパスを取得
             MLAPP_DIR = getattr(settings, 'MLAPP_DIR', None);
             # 学習データの削除
-            mlapp_model_fileName = MLAPP_DIR + '/model/mlapp_model.json'
+            mlapp_model_fileName = MLAPP_DIR + modelFilePath
             os.remove(mlapp_model_fileName)
+            return "学習データを削除しました。"
 
         except FileNotFoundError:
                             return "判定データフォルダまたはファイルがありません。"

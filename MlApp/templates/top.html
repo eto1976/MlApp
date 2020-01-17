@@ -10,13 +10,20 @@
         {{ form.errors }}
 
         <div class="form-group">
-            <label>データフォルダ ※該当フォルダまでのフルパス記載</label>
-            <input type="text" name="dataFolder" class="form-control" value={{ dataFolder }} >
+	        <label>学習ファイルのラベル定義</label>
         </div>
 
 		{{ topForm.category_1 }}
 		{{ topForm.category_2 }}
 		{{ topForm.category_3 }}
+
+<BR>
+<BR>
+<BR>
+        <div class="form-group">
+            <label>学習データフォルダ ※該当フォルダまでのフルパス記載</label>
+            <input type="text" name="dataFolder" class="form-control" value={{ dataFolder }} >
+        </div>
 
 <BR>
 <BR>
@@ -32,11 +39,15 @@
 <BR>
 		<div class="form-check form-check-inline">
 		  <input class="form-check-input" type="radio" name="exOp" id="train" value="1" required checked="checked" >
-		  <label class="form-check-label" for="train">訓練</label>
+		  <label class="form-check-label" for="train">学習処理</label>
 		</div>
 		<div class="form-check form-check-inline">
 		  <input class="form-check-input" type="radio" name="exOp" id="test" value="2" required >
-		  <label class="form-check-label" for="test">テスト</label>
+		  <label class="form-check-label" for="test">判別処理</label>
+		</div>
+		<div class="form-check form-check-inline">
+		  <input class="form-check-input" type="radio" name="exOp" id="test" value="3" required >
+		  <label class="form-check-label" for="test">学習データ削除</label>
 		</div>
 
         <button type="submit" name="doExecute" >実　行</button>

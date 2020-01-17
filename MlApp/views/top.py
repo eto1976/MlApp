@@ -35,6 +35,11 @@ def execution(request):
             # 画像判定処理
             msg = ImagelearnLogic.imageJudgmentExec(form)
 
+        elif exOp == "3" :
+
+            # 学習データ削除
+            msg = ImagelearnLogic.imageModelDeleteExec(form)
+
         else :
             msg = "実行に失敗しました。"
     else :
