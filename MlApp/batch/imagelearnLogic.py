@@ -1,14 +1,17 @@
-from keras.models import Sequential
-from keras.models import model_from_json
-from keras.layers import Activation, Dense, Dropout
-from keras.utils.np_utils import to_categorical
-from keras.optimizers import Adagrad
-from keras.optimizers import Adam
-from django.conf import settings
-import numpy as np
+import os
 
 from PIL import Image
-import os
+from django.conf import settings
+from keras.layers import Activation, Dense, Dropout
+from keras.models import Sequential
+from keras.models import model_from_json
+from keras.optimizers import Adagrad
+from keras.optimizers import Adam
+from keras.utils.np_utils import to_categorical
+
+from MlApp.models.mstimagelabel import Mst_imagelabel
+import numpy as np
+
 
 # 学習ファイル定義名
 modelFilePath = '/model/mlapp_model.json'
@@ -21,7 +24,7 @@ class ImagelearnLogic:
 
         try:
             # フォームからフォルダパスを取得
-            TRAIN_DIR = self.data['testFile']
+            TRAIN_DIR = self.data['dataFolder']
             # settingsからMLAPPのパスを取得
             MLAPP_DIR = getattr(settings, 'MLAPP_DIR', None);
             #データラベル取得
@@ -104,8 +107,8 @@ class ImagelearnLogic:
 
         try:
             # フォームからフォルダパスを取得
-            data = self.data['dataFolder']
-            TRAIN_DIR = self.data['testFile']
+            dataFolder = self.data['dataFolder']
+            testFile = self.data['testFile']
 
             # settingsからMLAPPのパスを取得
             MLAPP_DIR = getattr(settings, 'MLAPP_DIR', None);
@@ -122,41 +125,69 @@ class ImagelearnLogic:
             # 学習結果を読み込む
             model.load_weights(h5File)
 
-            # ディレクトリが存在しない場合はエラー
-            dir_list = os.listdir(TRAIN_DIR)
-            if not dir_list or len(dir_list)==0:
-                return "判定データフォルダまたはファイルがありません。"
+            #ファイルが指定されている場合はファイルの判定となり、ファイル指定がない場合はフォルダ単位の判定
+            if testFile is not None :
+                #画像データ数値置き換えと判定
+                image = np.array(Image.open(testFile).resize((25, 25)))
+                image = image.transpose(2, 0, 1)
+                image = image.reshape(1, image.shape[0] * image.shape[1] * image.shape[2]).astype("float32")[0]
+                result = model.predict_classes(np.array([image / 255.]))
 
-                # フォルダの画像または単一の画像でチェック。正解を表示する。
-                total = 0.
-                ok_count = 0.
+                #ラベルコードによる表示名称取得
+                dataLabelCd = result[0]
+                labelclass1 = dataLabelCd[0,3]
+                labelclass2 = dataLabelCd[3,3]
+                labelclass3 = dataLabelCd[8,3]
 
-                for dir in os.listdir(TRAIN_DIR):
+                #イメージラベルオブジェクト
+                imagelabel_name1 = ''
+                imagelabel_name2 = ''
+                imagelabel_name3 = ''
 
-                    dir1 = MLAPP_DIR + dir
-                    label = 0
+                for objimagelabel in Mst_imagelabel.objects.filter(labelclass=labelclass1):
+                    imagelabel_name1 = objimagelabel.labelclassname
 
-                    if dir == "apple":
-                        label = 0
-                    elif dir == "orange":
-                        label = 1
+                for objimagelabel in Mst_imagelabel.objects.filter(labelclass=labelclass2):
+                    imagelabel_name2 = objimagelabel.labelclassname
 
-                    for file in os.listdir(dir1):
-                        label_list.append(label)
-                        filepath = dir1 + "/" + file
-                        image = np.array(Image.open(filepath).resize((25, 25)))
-                        print(filepath)
-                        image = image.transpose(2, 0, 1)
-                        image = image.reshape(1, image.shape[0] * image.shape[1] * image.shape[2]).astype("float32")[0]
-                        result = model.predict_classes(np.array([image / 255.]))
-                        print("label:", label, "result:", result[0])
+                for objimagelabel in Mst_imagelabel.objects.filter(labelclass=labelclass3):
+                    imagelabel_name3 = objimagelabel.labelclassname
 
-                        total += 1.
+                return ("データ判定結果: ", imagelabel_name1 + " ", imagelabel_name2 + " ", imagelabel_name3)
 
-                        if label == result[0]:
-                            ok_count += 1.
+            else :
+                # ディレクトリが存在しない場合はエラー
+                dir_list = os.listdir(dataFolder)
+                if not dir_list or len(dir_list)==0:
+                    return "判定データフォルダがありません。"
 
-                print("seikai: ", ok_count / total * 100, "%")
+                    # フォルダの画像でチェック。ラベルに対する正解を表示する。
+                    total = 0.
+                    ok_count = 0.
+
+                    #データラベル取得
+                    dataLabelCd = self.data['category_1'] + self.data['category_2'] + self.data['category_3']
+
+                    for dir in os.listdir(dataFolder):
+
+                        dir1 = MLAPP_DIR + dir
+
+                        for file in os.listdir(dir1):
+                            label_list.append(dataLabelCd)
+                            filepath = dir1 + "/" + file
+                            image = np.array(Image.open(filepath).resize((25, 25)))
+                            print(filepath)
+                            image = image.transpose(2, 0, 1)
+                            image = image.reshape(1, image.shape[0] * image.shape[1] * image.shape[2]).astype("float32")[0]
+                            result = model.predict_classes(np.array([image / 255.]))
+                            print("label:", dataLabelCd, "result:", result[0])
+
+                            total += 1.
+
+                            if dataLabelCd == result[0]:
+                                ok_count += 1.
+
+                    return ("データ判定の正解率: ", ok_count / total * 100, "%")
 
         except FileNotFoundError:
                             return "判定データフォルダまたはファイルがありません。"
