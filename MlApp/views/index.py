@@ -49,8 +49,11 @@ def login(request):
     else :
             template = loader.get_template("top.html")
 
+    #セッションにユーザ情報保持
+    request.session['username'] = username
+    request.session['password'] = password
 
-    #プルダウン初期値追加
+    #プルダウン初期値追加のカテゴリー1のみ追加
     #カテゴリー1
     imagelabel_ct1 = []
     CATEGORIES_1 = ()

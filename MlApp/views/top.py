@@ -44,12 +44,28 @@ def execution(request):
         imagelabel_ct2 = []
         imagelabel_ct3 = []
 
+        EMPTY_CHOICES_1 = (
+            ('', '-----ラベル階層1-----'),
+        )
         EMPTY_CHOICES_2 = (
             ('', '-----ラベル階層2-----'),
         )
         EMPTY_CHOICES_3 = (
             ('', '-----ラベル階層3-----'),
         )
+
+        #カテゴリー1
+        CATEGORIES_1 = ()
+
+        for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
+            imagelabel_ct1.append(objimagelabel)
+
+        for imagelabel_ct1_obj in imagelabel_ct1:
+            CATEGORIES_1_GET = (
+                (imagelabel_ct1_obj.labelclass, imagelabel_ct1_obj.labelclassname),
+            )
+
+            CATEGORIES_1 = CATEGORIES_1 + CATEGORIES_1_GET
 
         #カテゴリー2
         CATEGORIES_2 = ()
@@ -78,6 +94,7 @@ def execution(request):
             CATEGORIES_3 = CATEGORIES_3 + CATEGORIES_3_GET
 
         #取得したフィールドの追加
+        form.fields['category_1'].choices = EMPTY_CHOICES_1 + CATEGORIES_1
         form.fields['category_2'].choices = EMPTY_CHOICES_2 + CATEGORIES_2
         form.fields['category_3'].choices = EMPTY_CHOICES_3 + CATEGORIES_3
 
