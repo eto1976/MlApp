@@ -1,0 +1,12 @@
+mst_imagelabel
+
+F01	‰Ê•¨	
+V01	–ìØ	
+FAP	‚è‚ñ‚²	F01
+FA1	ƒŠƒ“ƒS1“™‹‰	FAP
+FA2	ƒŠƒ“ƒS2“™‹‰	FAP
+FA3	ƒŠƒ“ƒS3“™‹‰	FAP
+VCU	‚«‚ã‚¤‚è	V01
+VC1	‚«‚ã‚¤‚è1“™‹‰	VCU
+VC2	‚«‚ã‚¤‚è2“™‹‰	VCU
+VC3	‚«‚ã‚¤‚è3“™‹‰	VCU
