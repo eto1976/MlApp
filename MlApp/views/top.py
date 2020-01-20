@@ -7,12 +7,44 @@ from MlApp.forms.topform import TopForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
 
 
+# タブ（Top）処理
 def top(request):
-    return render(request,'top.html')
 
-def work(request):
-    return render(request,'work.html')
+    topform = TopForm()
+    #プルダウン初期値追加のカテゴリー1のみ追加
+    #カテゴリー1
+    imagelabel_ct1 = []
+    CATEGORIES_1 = ()
 
+    for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
+        imagelabel_ct1.append(objimagelabel)
+
+    for imagelabel_ct1_obj in imagelabel_ct1:
+        CATEGORIES_1_GET = (
+            (imagelabel_ct1_obj.labelclass, imagelabel_ct1_obj.labelclassname),
+        )
+
+        CATEGORIES_1 = CATEGORIES_1 + CATEGORIES_1_GET
+
+    #選択肢追加
+    EMPTY_CHOICES_1 = (
+        ('', '-----ラベル階層1-----'),
+    )
+
+    topform.fields['category_1'].choices = EMPTY_CHOICES_1 + CATEGORIES_1
+
+    template = loader.get_template("top.html")
+    context = {
+        "topForm": topform,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+# タブ（Master）処理
+def master(request):
+    return render(request,'master.html')
+
+# 実行またはリロード処理
 def execution(request):
 
     form = TopForm(request.POST or None)

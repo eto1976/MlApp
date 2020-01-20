@@ -8,6 +8,6 @@ urlpatterns = [
 
     # Url定義（top）
     url(r'^top$', views.top, name='top'),
-    url(r'^work$', views.work, name='work'),
+    url(r'^master$', views.master, name='master'),
     url(r'^execution$', views.execution, name='execution'),
 ]

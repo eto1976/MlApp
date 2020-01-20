@@ -12,10 +12,12 @@ from MlApp.models.mstuser import Mst_user
 # デバックモード取得
 debugMode = getattr(settings, "DEBUG", None)
 
+# 初期表示
 def index(request):
 
     return render(request,'index.html')
 
+# ログイン処理
 def login(request):
 
     #フォーム取得と初期化
