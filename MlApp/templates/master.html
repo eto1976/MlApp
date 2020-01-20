@@ -1,0 +1,19 @@
+<!doctype html>
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+    <form class="form-signin" method="post" action=execution >{% csrf_token %}
+        {{ form.errors }}
+
+        <div class="form-group">
+	        <label>マスタ管理</label>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
