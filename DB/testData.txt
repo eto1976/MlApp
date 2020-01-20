@@ -1,0 +1,12 @@
+mst_imagelabel
+
+F01	果物
+V01	野菜
+FAP	りんご	F01
+FA1	リンゴ1等級	FAP
+FA2	リンゴ2等級	FAP
+FA3	リンゴ3等級	FAP
+VCU	きゅうり	V01
+VC1	きゅうり1等級	VCU
+VC2	きゅうり2等級	VCU
+VC3	きゅうり3等級	VCU
