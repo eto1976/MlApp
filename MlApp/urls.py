@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^login$', views.login, name='login'),
 
     # Url定義（共通Tab）
-#    url(r'^disptop$', views.top, name='disptop'),
+    url(r'^disptop$', views.disptop, name='disptop'),
     url(r'^tools$', views.tools, name='tools'),
     url(r'^master$', views.master, name='master'),
 
