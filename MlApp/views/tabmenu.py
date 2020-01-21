@@ -4,6 +4,7 @@ from django.template import loader
 
 from MlApp.forms.topform import TopForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
+from MlApp.forms.toolsform import ToolsForm
 
 
 # タブ（Top）処理
@@ -41,9 +42,22 @@ def disptop(request):
 
 # タブ（Tools）処理
 def tools(request):
-    return render(request,'tools.html')
+
+    toolsForm = ToolsForm()
+    template = loader.get_template("tools.html")
+    context = {
+        "toolsForm": toolsForm,
+    }
+
+    return HttpResponse(template.render(context, request))
 
 # タブ（Master）処理
 def master(request):
-    return render(request,'master.html')
+
+    template = loader.get_template("master.html")
+    context = {
+
+    }
+
+    return HttpResponse(template.render(context, request))
 
