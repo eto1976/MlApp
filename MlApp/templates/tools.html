@@ -5,6 +5,15 @@
 
 {% block content %}
 
+<style type="text/css">
+<!--
+#id_sturlpath, #id_fileExtension {
+    width: 280px;
+    height: 32px;
+}
+-->
+</style>
+
 <div class="container">
     <form class="form-signin" method="post" action="execution" >{% csrf_token %}
         {{ form.errors }}
@@ -15,7 +24,18 @@
 	        <label>画像ファイル抽出機能</label>
         </div>
 
-		{{ toolsForm.sturlpath }}
+        <div class="form-group">
+            <label>クローリング用URL ※2083文字まで</label>
+            <BR>
+			{{ toolsForm.sturlpath }}
+        </div>
+
+        <div class="form-group">
+            <label>抽出ファイル拡張子</label>
+            <BR>
+			{{ toolsForm.fileExtension }}
+        </div>
+
 
     </form>
 </div>

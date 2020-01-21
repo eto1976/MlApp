@@ -9,4 +9,9 @@ class ToolsForm(forms.Form):
         required=True,
     )
 
+    fileExtension = forms.CharField(
+        label='fileExtension',
+        max_length=999,
+        required=True,
+    )
 
