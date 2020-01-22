@@ -8,16 +8,18 @@ import bs4
 
 class WebCrawlerLogic:
 
-    def crawring(self, url, extensions):
+    #パラメータ定義前提
+    #self = url
+    def crawring(self, extensions):
         """
             Content:
                 クローリング
             Param:
-                url:        クローリングするURL
+                self(url):        クローリングするURL
                 extensions:    取得するリソースの拡張子(list)
         """
         # 指定したURLのHTMLを取得
-        html = WebCrawlerLogic.get_html_string(url)
+        html = WebCrawlerLogic.get_html_string(self)
         if len(html) < 1:
             return "HTMLが取得できませんでした、URLを確認してください。"
 

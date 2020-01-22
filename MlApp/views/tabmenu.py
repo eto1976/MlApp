@@ -8,7 +8,7 @@ from MlApp.forms.toolsform import ToolsForm
 
 
 # タブ（Top）処理
-def disptop(request):
+def tabmenuTop(request):
 
     topform = TopForm()
     #プルダウン初期値追加のカテゴリー1のみ追加
@@ -41,7 +41,7 @@ def disptop(request):
     return HttpResponse(template.render(context, request))
 
 # タブ（Tools）処理
-def tools(request):
+def tabmenuTools(request):
 
     toolsForm = ToolsForm()
     template = loader.get_template("tools.html")
@@ -52,7 +52,7 @@ def tools(request):
     return HttpResponse(template.render(context, request))
 
 # タブ（Master）処理
-def master(request):
+def tabmenuMaster(request):
 
     template = loader.get_template("master.html")
     context = {

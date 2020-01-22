@@ -8,7 +8,7 @@ from MlApp.models.mstimagelabel import Mst_imagelabel
 
 
 # 実行またはリロード処理
-def execution(request):
+def topExecution(request):
 
     #通常Form（※編集不可）
     form = TopForm(request.POST or None)

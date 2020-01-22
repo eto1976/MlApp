@@ -7,15 +7,11 @@
 
 <style type="text/css">
 <!--
-#id_sturlpath, #id_fileExtension {
-    width: 640px;
-    height: 32px;
-}
 -->
 </style>
 
 <div class="container">
-    <form class="form-signin" method="post" action="execution" >{% csrf_token %}
+    <form class="form-signin" method="post" action="toolsExecution" >{% csrf_token %}
         {{ form.errors }}
 
 		<h2>学習ツール</h2>
@@ -36,6 +32,12 @@
 			{{ toolsForm.fileExtension }}
         </div>
 
+        <button type="submit" name="doExecute" >実　行</button>
+
+        <div class="form-group">
+            <label>実行結果</label>
+			{{ toolsForm.msg }}
+        </div>
 
     </form>
 </div>

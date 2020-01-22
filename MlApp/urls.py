@@ -7,10 +7,14 @@ urlpatterns = [
     url(r'^login$', views.login, name='login'),
 
     # Url定義（共通Tab）
-    url(r'^disptop$', views.disptop, name='disptop'),
-    url(r'^tools$', views.tools, name='tools'),
-    url(r'^master$', views.master, name='master'),
+    url(r'^tabmenuTop$', views.tabmenuTop, name='tabmenuTop'),
+    url(r'^tabmenuTools$', views.tabmenuTools, name='tabmenuTools'),
+    url(r'^tabmenuMaster$', views.tabmenuMaster, name='tabmenuMaster'),
 
     # Url定義（top）
-    url(r'^execution$', views.execution, name='execution'),
+    url(r'^topExecution', views.topExecution, name='topExecution'),
+
+    # Url定義（tools）
+    url(r'^toolsExecution', views.toolsExecution, name='toolsExecution'),
+
 ]
