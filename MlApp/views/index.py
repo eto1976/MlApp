@@ -20,9 +20,8 @@ def index(request):
 # ログイン処理
 def login(request):
 
-    #フォーム取得と初期化
+    #通常Form（※編集不可）
     form = IndexForm(request.POST or None)
-    topform = TopForm()
 
     username = form.data['username']
     password = form.data['password']
@@ -75,12 +74,13 @@ def login(request):
         ('', '-----ラベル階層1-----'),
     )
 
+    #Top画面初期値設定
+    topform = TopForm()
     topform.fields['category_1'].choices = EMPTY_CHOICES_1 + CATEGORIES_1
 
     context = {
         "username": username,
         "password": password,
-        "msg": msg,
         "topForm": topform,
     }
 

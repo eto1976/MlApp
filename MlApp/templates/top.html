@@ -5,6 +5,12 @@
 
 {% block content %}
 
+<style type="text/css">
+<!--
+}
+-->
+</style>
+
 <div class="container">
     <form class="form-signin" method="post" action="execution" >{% csrf_token %}
         {{ form.errors }}
@@ -25,7 +31,8 @@
 <BR>
         <div class="form-group">
             <label>データフォルダ ※該当フォルダまでのフルパス記載</label>
-            <input type="text" name="dataFolder" class="form-control" value={{ dataFolder }} >
+<BR>
+			{{ topForm.dataFolder }}
         </div>
 <BR>
         <div class="form-group">
@@ -52,7 +59,7 @@
 
         <div class="form-group">
             <label>実行結果</label>
-			<textarea name="msg" class="form-control" rows="3" readonly >{{ msg }}</textarea>
+			{{ topForm.msg }}
         </div>
 
     </form>

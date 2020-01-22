@@ -29,6 +29,8 @@ class ImagelearnLogic:
             MLAPP_DIR = getattr(settings, 'MLAPP_DIR', None);
             #データラベル取得
             dataLabelCd = self.data['category_1'] + self.data['category_2'] + self.data['category_3']
+            if len(dataLabelCd) < 9:
+                return "ラベルが正しく設定されていません。"
 
             # 学習用のデータを作る.
             image_list = []
