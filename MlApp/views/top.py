@@ -10,9 +10,9 @@ from MlApp.models.mstimagelabel import Mst_imagelabel
 # 実行またはリロード処理
 def topExecution(request):
 
-    #通常Form（※編集不可）
+    # 通常Form（※編集不可）
     form = TopForm(request.POST or None)
-    #編集用CopyForm
+    # 編集用CopyForm
     formcopy = TopForm(request.POST.copy())
 
     testFile = form.data['testFile']
@@ -40,8 +40,8 @@ def topExecution(request):
         else :
             msg = "実行に失敗しました。"
 
-    #選択肢動的変更
-    #イメージラベルオブジェクト
+    # 選択肢動的変更
+    # イメージラベルオブジェクト
     imagelabel_ct1 = []
     imagelabel_ct2 = []
     imagelabel_ct3 = []
@@ -56,7 +56,7 @@ def topExecution(request):
         ('', '-----ラベル階層3-----'),
     )
 
-    #カテゴリー1
+    # カテゴリー1
     CATEGORIES_1 = ()
 
     for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass__isnull=True):
@@ -69,7 +69,7 @@ def topExecution(request):
 
         CATEGORIES_1 = CATEGORIES_1 + CATEGORIES_1_GET
 
-    #カテゴリー2
+    # カテゴリー2
     CATEGORIES_2 = ()
 
     for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass=form.data['category_1']):
@@ -82,7 +82,7 @@ def topExecution(request):
 
         CATEGORIES_2 = CATEGORIES_2 + CATEGORIES_2_GET
 
-    #カテゴリー3
+    # カテゴリー3
     CATEGORIES_3 = ()
 
     for objimagelabel in Mst_imagelabel.objects.filter(baselabelclass=form.data['category_2']):
@@ -95,12 +95,12 @@ def topExecution(request):
 
         CATEGORIES_3 = CATEGORIES_3 + CATEGORIES_3_GET
 
-    #取得したフィールドの追加
+    # 取得したフィールドの追加
     formcopy.fields['category_1'].choices = EMPTY_CHOICES_1 + CATEGORIES_1
     formcopy.fields['category_2'].choices = EMPTY_CHOICES_2 + CATEGORIES_2
     formcopy.fields['category_3'].choices = EMPTY_CHOICES_3 + CATEGORIES_3
 
-    #メッセージをセット
+    # メッセージをセット
     formcopy.data['msg'] = msg
     template = loader.get_template("top.html")
     context = {

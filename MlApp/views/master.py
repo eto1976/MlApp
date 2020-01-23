@@ -1,9 +1,7 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.template import loader
 
 from MlApp.models.mstimagelabel import Mst_imagelabel
-from MlApp.forms.toolsform import ToolsForm
 
 
 # 処理実行またはリロード処理

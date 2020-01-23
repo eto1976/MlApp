@@ -9,9 +9,9 @@ from MlApp.forms.toolsform import ToolsForm
 # 実行またはリロード処理
 def toolsExecution(request):
 
-    #通常Form（※編集不可）
+    # 通常Form（※編集不可）
     form = ToolsForm(request.POST or None)
-    #編集用CopyForm
+    # 編集用CopyForm
     formcopy = ToolsForm(request.POST.copy())
 
     url = form.data['sturlpath']
@@ -23,7 +23,7 @@ def toolsExecution(request):
         # 画像クローリング処理
         msg = WebCrawlerLogic.crawring(url, extensions)
 
-    #メッセージをセット
+    # メッセージをセット
     formcopy.data['msg'] = msg
     template = loader.get_template("tools.html")
     context = {

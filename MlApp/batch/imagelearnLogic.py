@@ -27,7 +27,7 @@ class ImagelearnLogic:
             TRAIN_DIR = self.data['dataFolder']
             # settingsからMLAPPのパスを取得
             MLAPP_DIR = getattr(settings, 'MLAPP_DIR', None);
-            #データラベル取得
+            # データラベル取得
             dataLabelCd = self.data['category_1'] + self.data['category_2'] + self.data['category_3']
             if len(dataLabelCd) < 9:
                 return "ラベルが正しく設定されていません。"
@@ -127,21 +127,21 @@ class ImagelearnLogic:
             # 学習結果を読み込む
             model.load_weights(h5File)
 
-            #ファイルが指定されている場合はファイルの判定となり、ファイル指定がない場合はフォルダ単位の判定
+            # ファイルが指定されている場合はファイルの判定となり、ファイル指定がない場合はフォルダ単位の判定
             if testFile is not None :
-                #画像データ数値置き換えと判定
+                # 画像データ数値置き換えと判定
                 image = np.array(Image.open(testFile).resize((25, 25)))
                 image = image.transpose(2, 0, 1)
                 image = image.reshape(1, image.shape[0] * image.shape[1] * image.shape[2]).astype("float32")[0]
                 result = model.predict_classes(np.array([image / 255.]))
 
-                #ラベルコードによる表示名称取得
+                # ラベルコードによる表示名称取得
                 dataLabelCd = result[0]
                 labelclass1 = dataLabelCd[0,3]
                 labelclass2 = dataLabelCd[3,3]
                 labelclass3 = dataLabelCd[8,3]
 
-                #イメージラベルオブジェクト
+                # イメージラベルオブジェクト
                 imagelabel_name1 = ''
                 imagelabel_name2 = ''
                 imagelabel_name3 = ''
@@ -167,7 +167,7 @@ class ImagelearnLogic:
                     total = 0.
                     ok_count = 0.
 
-                    #データラベル取得
+                    # データラベル取得
                     dataLabelCd = self.data['category_1'] + self.data['category_2'] + self.data['category_3']
 
                     for dir in os.listdir(dataFolder):

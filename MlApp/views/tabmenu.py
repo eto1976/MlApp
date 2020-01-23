@@ -11,8 +11,8 @@ from MlApp.forms.toolsform import ToolsForm
 def tabmenuTop(request):
 
     topform = TopForm()
-    #プルダウン初期値追加のカテゴリー1のみ追加
-    #カテゴリー1
+    # プルダウン初期値追加のカテゴリー1のみ追加
+    # カテゴリー1
     imagelabel_ct1 = []
     CATEGORIES_1 = ()
 
@@ -26,7 +26,7 @@ def tabmenuTop(request):
 
         CATEGORIES_1 = CATEGORIES_1 + CATEGORIES_1_GET
 
-    #選択肢追加
+    # 選択肢追加
     EMPTY_CHOICES_1 = (
         ('', '-----ラベル階層1-----'),
     )

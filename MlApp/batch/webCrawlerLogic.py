@@ -8,8 +8,8 @@ import bs4
 
 class WebCrawlerLogic:
 
-    #パラメータ定義前提
-    #self = url
+    # パラメータ定義前提
+    # self = url
     def crawring(self, extensions):
         """
             Content:
