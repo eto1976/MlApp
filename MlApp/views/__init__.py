@@ -13,3 +13,5 @@ from MlApp.views.top import topExecution
 # Vew定義（tools）
 from MlApp.views.tools import toolsExecution
 
+# Vew定義（tools）
+from MlApp.views.master import masterExecution

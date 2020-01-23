@@ -18,4 +18,7 @@ urlpatterns = [
     # Url定義（tools）
     url(r'^toolsExecution', views.toolsExecution, name='toolsExecution'),
 
+    # Url定義（tools）
+    url(r'^masterExecution', views.masterExecution, name='masterExecution'),
+
 ]
