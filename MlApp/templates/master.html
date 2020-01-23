@@ -5,14 +5,19 @@
 
 {% block content %}
 
+<style type="text/css">
+<!--
+-->
+</style>
+
 <div class="container">
-    <form class="form-signin" method="post" action="execution" >{% csrf_token %}
+    <form method="post" action="execution" >{% csrf_token %}
         {{ form.errors }}
 
 		<h2>マスタ管理</h2>
-
+<BR>
         <div class="form-group">
-	        <label>画像ラベルマスタ</label>
+	       	<h5>画像ラベルマスタ</h5>
         </div>
 
     </form>

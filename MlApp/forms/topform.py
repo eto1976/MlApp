@@ -13,6 +13,12 @@ class TopForm(forms.Form):
         ('', '-----ラベル階層3-----'),
     )
 
+    CHOICES_1 = [
+        ('1', '学習処理'),
+        ('2', '判別処理'),
+        ('3', '学習データ削除'),
+    ]
+
     category_1 = forms.ChoiceField(
         choices=EMPTY_CHOICES_1,
         required=False,
@@ -45,10 +51,10 @@ class TopForm(forms.Form):
         max_length=260,
     )
 
-    exOp = forms.CharField(
+    exOp = forms.ChoiceField(
         label='exOp',
-        max_length=1,
-        required=True,
+        required=False,
+        widget=forms.RadioSelect, choices= CHOICES_1, initial=1
     )
 
     msg = forms.CharField(

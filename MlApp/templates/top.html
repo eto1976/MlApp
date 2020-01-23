@@ -7,60 +7,48 @@
 
 <style type="text/css">
 <!--
-}
 -->
 </style>
 
 <div class="container">
-    <form class="form-signin" method="post" action="topExecution" >{% csrf_token %}
+    <form method="post" action="topExecution" >{% csrf_token %}
         {{ form.errors }}
 
 		<h2>学習処理と判別処理</h2>
 <BR>
-
         <div class="form-group">
-	        <label>学習ファイルのラベル定義</label>
+	        <h5>学習ファイルのラベル定義</h5>
         </div>
-
 		{{ topForm.category_1 }}
 		{{ topForm.category_2 }}
 		{{ topForm.category_3 }}
-
 <BR>
 <BR>
 <BR>
         <div class="form-group">
-            <label>データフォルダ ※該当フォルダまでのフルパス記載</label>
-<BR>
+	        <h5>データフォルダ ※該当フォルダまでのフルパス記載</h5>
 			{{ topForm.dataFolder }}
         </div>
 <BR>
         <div class="form-group">
-		    <label>ファイル指定 ※ファイル指定の場合はファイル判定を優先</label>
+	        <h5>ファイル指定 ※ファイル指定の場合はファイル判定を優先</h5>
 		    <input type="file" name="testFile" class="form-control-file" >
 		    <!-- file属性にvalueはセットできない -->
         </div>
 <BR>
 <BR>
-		<div class="form-check form-check-inline">
-		  <input class="form-check-input" type="radio" name="exOp" id="train" value="1" required checked="checked" >
-		  <label class="form-check-label" for="train">学習処理</label>
+        <h5>処理種別</h5>
+        <div class="form-check form-check-inline">
+	        <label>
+			{{ topForm.exOp }}
+			</label>
 		</div>
-		<div class="form-check form-check-inline">
-		  <input class="form-check-input" type="radio" name="exOp" id="test" value="2" required >
-		  <label class="form-check-label" for="test">判別処理</label>
-		</div>
-		<div class="form-check form-check-inline">
-		  <input class="form-check-input" type="radio" name="exOp" id="test" value="3" required >
-		  <label class="form-check-label" for="test">学習データ削除</label>
-		</div>
-
-        <button type="submit" name="doExecute" >実　行</button>
 <BR>
+        <button type="submit" class="btn btn-default" name="doExecute" >実　行</button>
 <BR>
 <BR>
         <div class="form-group">
-            <label>実行結果</label>
+	        <h5>実行結果</h5>
 			{{ topForm.msg }}
         </div>
 

@@ -16,19 +16,18 @@ def toolsExecution(request):
 
     url = form.data['sturlpath']
     extensions = form.data['fileExtension']
+    msg = form.data['msg']
 
     # 実行ボタン押下時
     if 'doExecute' in request.POST:
-
         # 画像クローリング処理
         msg = WebCrawlerLogic.crawring(url, extensions)
-
 
     #メッセージをセット
     formcopy.data['msg'] = msg
     template = loader.get_template("tools.html")
     context = {
-        "toolsform": formcopy,
+        "toolsForm": formcopy,
     }
 
     return HttpResponse(template.render(context, request))

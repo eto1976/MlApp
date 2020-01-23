@@ -4,7 +4,7 @@ from django import forms
 class ToolsForm(forms.Form):
 
     CHOICES_1 = [
-        ('1', 'jpg'),
+        ('1', 'jpg、jpeg'),
         ('2', 'bmp'),
         ('3', 'png'),
         ('4', 'tiff'),
@@ -22,7 +22,7 @@ class ToolsForm(forms.Form):
     fileExtension = forms.MultipleChoiceField(
         label='fileExtension',
         required=False,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': "checkbox-inline",}), choices=CHOICES_1
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "checkbox-inline"}), choices=CHOICES_1
     )
 
     msg = forms.CharField(
