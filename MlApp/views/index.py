@@ -15,6 +15,7 @@ debugMode = getattr(settings, "DEBUG", None)
 # 初期表示
 def index(request):
 
+    request.session.clear()
     return render(request,'index.html')
 
 # ログイン処理
@@ -79,8 +80,6 @@ def login(request):
     topform.fields['category_1'].choices = EMPTY_CHOICES_1 + CATEGORIES_1
 
     context = {
-        "username": username,
-        "password": password,
         "topForm": topform,
     }
 

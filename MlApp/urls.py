@@ -2,8 +2,9 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # Url定義（index）
+    # Url定義（index）ログイン後のIndex画面に戻るURLも定義
     url(r'^$', views.index, name='index'),
+    url(r'^index$', views.index, name='index'),
     url(r'^login$', views.login, name='login'),
 
     # Url定義（共通Tab）
