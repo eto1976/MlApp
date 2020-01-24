@@ -18,8 +18,7 @@
   		<div class="card-body">
 
 		    <form method="post" action="masterExecution" >{% csrf_token %}
-		        {{ form.errors }}
-
+		    {{ msg }}
 				<h2>マスタ管理</h2>
 				<BR>
 		        <div class="form-group">
@@ -38,7 +37,7 @@
 		        	<h5>baselabelclass</h5>
 					{{ masterForm.baselabelclass }}
 		        </div>
-		        <button type="submit" class="btn btn-default" name="doEdit" >更　新</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <button type="submit" class="btn btn-default" name="doEdit" >反　映</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        <button type="submit" class="btn btn-default" name="doSearch" >戻　る</button>
 
 		    </form>

@@ -18,8 +18,6 @@
   		<div class="card-body">
 
 		    <form method="post" action="masterExecution" >{% csrf_token %}
-		        {{ form.errors }}
-
 				<h2>マスタ管理</h2>
 				<BR>
 		        <div class="form-group">
@@ -57,8 +55,8 @@
 			    {% include 'page.html' %}
 
 				<BR>
-		        <button type="submit" class="btn btn-default" name="doInsert" >新　規</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        <button type="submit" class="btn btn-default" name="doEdit" >修　正</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <button type="submit" class="btn btn-default" name="doInsertDisp" >新　規</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <button type="submit" class="btn btn-default" name="doEditDisp" >修　正</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        <button type="submit" class="btn btn-default" name="doDelete" >削　除</button>
 
 		    </form>

@@ -7,13 +7,17 @@ from MlApp.views.page import paginate_queryset
 
 
 # 1ページの表示件数
-pagecount = 10
+pagecount = 5
 
 # 処理実行またはリロード処理
 def masterExecution(request):
 
-    #　フォーム初期化
-    masterForm = MasterForm()
+    # 通常Form（※編集不可）
+    masterForm = MasterForm(request.POST or None)
+    # 編集用CopyForm
+    masterFormcopy = MasterForm(request.POST.copy())
+
+    msg=""
 
     # 検索ボタン押下時
     if 'doSearch' in request.POST:
@@ -39,15 +43,15 @@ def masterExecution(request):
         }
 
     # 登録ボタン押下時（画面遷移）
-    elif 'doInsert' in request.POST:
-        imagelabelList = Mst_imagelabel.objects.all()
+    elif 'doInsertDisp' in request.POST:
 
         template = loader.get_template("masterEdit.html")
         context = {
+            "masterForm": masterForm,
         }
 
     # 修正ボタン押下時（画面遷移）
-    elif 'doEdit' in request.POST:
+    elif 'doEditDisp' in request.POST:
         selectRadios = request.POST.get('selectRadios')
         imagelabel_ct = []
         for objimagelabel in Mst_imagelabel.objects.filter(labelclass=selectRadios):
@@ -55,13 +59,46 @@ def masterExecution(request):
 
 
         # 取得したフィールドの追加
-        masterForm.data['labelclass'] = imagelabel_ct[0].labelclass
-        masterForm.data['labelclassname'] = imagelabel_ct[0].labelclassname
-        masterForm.data['baselabelclass'] = imagelabel_ct[0].baselabelclass
+        masterFormcopy.data['labelclass'] = imagelabel_ct[0].labelclass
+        masterFormcopy.data['labelclassname'] = imagelabel_ct[0].labelclassname
+        masterFormcopy.data['baselabelclass'] = imagelabel_ct[0].baselabelclass
 
         template = loader.get_template("masterEdit.html")
         context = {
+            "masterForm": masterFormcopy,
+        }
+
+    # 登録処理
+    elif 'doInsert' in request.POST:
+
+        objimagelabel = Mst_imagelabel(
+            labelclass=masterForm.data['labelclass'],
+            labelclassname = masterForm.data['labelclassname'],
+            baselabelclass = masterForm.data['baselabelclass'])
+
+        objimagelabel.save()
+
+        msg = "登録が行われました。"
+        template = loader.get_template("masterEdit.html")
+        context = {
             "masterForm": masterForm,
+            "msg": msg,
+        }
+
+    # 修正処理
+    elif 'doEdit' in request.POST:
+
+        objimagelabel = Mst_imagelabel.objects.get(labelclass=masterForm.data['labelclass'])
+        objimagelabel.labelclassname = masterForm.data['labelclassname']
+        objimagelabel.baselabelclass = masterForm.data['baselabelclass']
+
+        objimagelabel.save()
+
+        msg = "修正が行われました。"
+        template = loader.get_template("masterEdit.html")
+        context = {
+            "masterForm": masterForm,
+            "msg": msg,
         }
 
     # 削除ボタン押下時

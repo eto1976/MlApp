@@ -6,7 +6,7 @@ class MasterForm(forms.Form):
     labelclass = forms.CharField(
         label='labelclass',
         max_length=3,
-        required=False,
+        required=True,
         widget=forms.TextInput(attrs={'class': "form-control"}),
     )
 
