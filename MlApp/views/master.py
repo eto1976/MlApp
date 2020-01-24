@@ -4,6 +4,8 @@ from django.template import loader
 from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.views.page import paginate_queryset
 
+# 1ページの表示件数
+pagecount = 10
 
 # 処理実行またはリロード処理
 def masterExecution(request):
@@ -13,7 +15,7 @@ def masterExecution(request):
         # 検索処理
         imagelabelList = Mst_imagelabel.objects.all()
         #ページング処理（第3引数が1ページの表示件数）
-        page_obj = paginate_queryset(request, imagelabelList, 10)
+        page_obj = paginate_queryset(request, imagelabelList, pagecount)
 
         template = loader.get_template("master.html")
         context = {
@@ -61,7 +63,7 @@ def masterExecution(request):
         # 検索処理
         imagelabelList = Mst_imagelabel.objects.all()
         #ページング処理
-        page_obj = paginate_queryset(request, imagelabelList, 5)
+        page_obj = paginate_queryset(request, imagelabelList, pagecount)
 
         template = loader.get_template("master.html")
         context = {
