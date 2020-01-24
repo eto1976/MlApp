@@ -17,6 +17,16 @@ def masterExecution(request):
             "imagelabelList": imagelabelList,
         }
 
+    # クリアボタン押下時
+    if 'doClear' in request.POST:
+        # 検索処理
+        imagelabelList = []
+
+        template = loader.get_template("master.html")
+        context = {
+            "imagelabelList": imagelabelList,
+        }
+
     # 登録ボタン押下時
     elif 'doInsert' in request.POST:
         imagelabelList = Mst_imagelabel.objects.all()

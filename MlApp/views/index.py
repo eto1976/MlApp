@@ -19,8 +19,12 @@ def index(request):
 
     template = loader.get_template("index.html")
 
+    if debugMode == True:
+        msg = "デバックモード(ログイン認証なし)"
+
     context = {
         "indexForm": form,
+        "msg": msg,
     }
 
     request.session.clear()
