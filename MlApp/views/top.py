@@ -1,5 +1,4 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.template import loader
 
 from MlApp.batch.imagelearnLogic import ImagelearnLogic

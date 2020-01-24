@@ -4,13 +4,20 @@ from django import forms
 class IndexForm(forms.Form):
 
     username = forms.CharField(
-        label='Id',
+        label='inputText',
         max_length=5,
-        required=True,
+        required=False,
+        widget=forms.TextInput(attrs={'class': "form-control",'placeholder':'Id'}),
     )
 
     password = forms.CharField(
-        label='Password',
+        label='inputPassword',
         max_length=20,
-        required=True,
+        required=False,
+        widget=forms.PasswordInput(attrs={'class': "form-control",'placeholder':'Password'}),
+    )
+
+    msg = forms.CharField(
+        label='msg',
+        required=False,
     )

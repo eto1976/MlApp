@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.template import loader
 
 from MlApp.forms.indexform import IndexForm
@@ -15,8 +14,18 @@ debugMode = getattr(settings, "DEBUG", None)
 # 初期表示
 def index(request):
 
+    # 通常Form（※編集不可）
+    form = IndexForm(request.POST or None)
+
+    template = loader.get_template("index.html")
+
+    context = {
+        "indexForm": form,
+    }
+
     request.session.clear()
-    return render(request,'index.html')
+
+    return HttpResponse(template.render(context, request))
 
 # ログイン処理
 def login(request):
@@ -44,6 +53,7 @@ def login(request):
             msg = "ユーザIDまたはパスワードが不正です。"
 
             context = {
+                "indexForm": form,
                 "msg": msg,
             }
             return HttpResponse(template.render(context, request))

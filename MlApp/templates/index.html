@@ -12,32 +12,29 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+    <!-- jqueryの読み込み ※jqueryを最初に読み込む方がよい bootstrap4からpopper.jsに依存 -->
+	<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
   </head>
   <body class="text-center">
     <form class="form-signin" method="post" action=login >{% csrf_token %}
-      {{ form.errors }}
       {{ msg }}
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputText" class="sr-only">Id</label>
-<!--
-      <input type="email" id="inputEmail" name="username" class="form-control" placeholder="Email address" required autofocus>
--->
-      <input type="text" id="inputText" name="username" class="form-control" placeholder="Id" >
+		{{ indexForm.username }}
       <label for="inputPassword" class="sr-only">Password</label>
-<!--
-      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
--->
-      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password">
+		{{ indexForm.password }}
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
 	    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2020～2020</p>
+      <p class="mt-5 mb-3 text-muted">&copy; 2020～</p>
     </form>
   </body>
 </html>
