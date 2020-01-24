@@ -7,6 +7,9 @@ from MlApp.views.tabmenu import tabmenuTop
 from MlApp.views.tabmenu import tabmenuTools
 from MlApp.views.tabmenu import tabmenuMaster
 
+# Vew定義（page）
+from MlApp.views.page import paginate_queryset
+
 # Vew定義（top）
 from MlApp.views.top import topExecution
 
