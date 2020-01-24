@@ -42,7 +42,9 @@
 			        {% for imagelabel in imagelabelList %}
 			          <tr>
 					      <td>
-							<input class="form-check-input" type="radio" name="selectRadios" id="selectRadios" value={{ imagelabel.labelclass }} >
+					      	<div class="form-check">
+								<input class="form-check-input" type="radio" name="selectRadios" id="selectRadios" value={{ imagelabel.labelclass }} >
+							</div>
 					      </td>
 					      <td>{{ imagelabel.labelclass }}</td>
 					      <td>{{ imagelabel.labelclassname }}</td>
