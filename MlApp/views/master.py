@@ -44,14 +44,17 @@ def masterExecution(request):
 
     # 登録ボタン押下時（画面遷移）
     elif 'doInsertDisp' in request.POST:
+        dispMode = 'insert'
 
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterForm,
+            "dispMode": dispMode,
         }
 
     # 修正ボタン押下時（画面遷移）
     elif 'doEditDisp' in request.POST:
+        dispMode = 'edit'
         selectRadios = request.POST.get('selectRadios')
         imagelabel_ct = []
         for objimagelabel in Mst_imagelabel.objects.filter(labelclass=selectRadios):
@@ -69,11 +72,13 @@ def masterExecution(request):
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterFormcopy,
+            "dispMode": dispMode,
         }
 
     # 登録処理
     elif 'doInsert' in request.POST:
 
+        dispMode = 'insert'
         objimagelabel = Mst_imagelabel(
             labelclass=masterForm.data['labelclass'],
             labelclassname = masterForm.data['labelclassname'],
@@ -85,12 +90,14 @@ def masterExecution(request):
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterForm,
+            "dispMode": dispMode,
             "msg": msg,
         }
 
     # 修正処理
     elif 'doEdit' in request.POST:
 
+        dispMode = 'edit'
         objimagelabel = Mst_imagelabel.objects.get(labelclass=masterForm.data['labelclass'])
         objimagelabel.labelclassname = masterForm.data['labelclassname']
         objimagelabel.baselabelclass = masterForm.data['baselabelclass']
@@ -101,16 +108,20 @@ def masterExecution(request):
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterForm,
+            "dispMode": dispMode,
             "msg": msg,
         }
 
     # 削除ボタン押下時
     elif 'doDelete' in request.POST:
-        imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
+        selectRadios = request.POST.get('selectRadios')
+        Mst_imagelabel.objects.filter(labelclass=selectRadios).delete()
 
+        msg = "削除が完了しました。"
         template = loader.get_template("master.html")
         context = {
-            "imagelabelList": imagelabelList,
+            "masterForm": masterForm,
+            "msg": msg,
         }
 
     # ページング処理（ここだけgetのみ）
