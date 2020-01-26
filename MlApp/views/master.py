@@ -115,12 +115,21 @@ def masterExecution(request):
     # 削除ボタン押下時
     elif 'doDelete' in request.POST:
         selectRadios = request.POST.get('selectRadios')
-        Mst_imagelabel.objects.filter(labelclass=selectRadios).delete()
+        if selectRadios is None:
+            msg = "削除するデータを選択したください。"
+        else:
+            Mst_imagelabel.objects.filter(labelclass=selectRadios).delete()
+            msg = "削除が完了しました。"
 
-        msg = "削除が完了しました。"
+        # 検索処理
+        imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
+        #ページング処理（第3引数が1ページの表示件数）
+        page_obj = paginate_queryset(request, imagelabelList, pagecount)
+
         template = loader.get_template("master.html")
         context = {
-            "masterForm": masterForm,
+            "imagelabelList": page_obj.object_list,
+            'page_obj': page_obj,
             "msg": msg,
         }
 
