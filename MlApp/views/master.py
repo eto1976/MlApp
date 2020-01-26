@@ -116,7 +116,7 @@ def masterExecution(request):
     elif 'doDelete' in request.POST:
         selectRadios = request.POST.get('selectRadios')
         if selectRadios is None:
-            msg = "削除するデータを選択したください。"
+            msg = "削除するデータを選択してください。"
         else:
             Mst_imagelabel.objects.filter(labelclass=selectRadios).delete()
             msg = "削除が完了しました。"
