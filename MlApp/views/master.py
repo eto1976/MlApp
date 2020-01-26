@@ -22,7 +22,7 @@ def masterExecution(request):
     # 検索ボタン押下時
     if 'doSearch' in request.POST:
         # 検索処理
-        imagelabelList = Mst_imagelabel.objects.all()
+        imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
         #ページング処理（第3引数が1ページの表示件数）
         page_obj = paginate_queryset(request, imagelabelList, pagecount)
 
@@ -63,6 +63,9 @@ def masterExecution(request):
         masterFormcopy.data['labelclassname'] = imagelabel_ct[0].labelclassname
         masterFormcopy.data['baselabelclass'] = imagelabel_ct[0].baselabelclass
 
+        # 主キーのreadonly
+        masterFormcopy.fields['labelclass'].widget.attrs['readonly'] = 'readonly'
+
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterFormcopy,
@@ -78,7 +81,7 @@ def masterExecution(request):
 
         objimagelabel.save()
 
-        msg = "登録が行われました。"
+        msg = "登録が完了しました。"
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterForm,
@@ -94,7 +97,7 @@ def masterExecution(request):
 
         objimagelabel.save()
 
-        msg = "修正が行われました。"
+        msg = "修正が完了しました。"
         template = loader.get_template("masterEdit.html")
         context = {
             "masterForm": masterForm,
@@ -103,7 +106,7 @@ def masterExecution(request):
 
     # 削除ボタン押下時
     elif 'doDelete' in request.POST:
-        imagelabelList = Mst_imagelabel.objects.all()
+        imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
 
         template = loader.get_template("master.html")
         context = {
@@ -113,7 +116,7 @@ def masterExecution(request):
     # ページング処理（ここだけgetのみ）
     elif request.GET.get('page'):
         # 検索処理
-        imagelabelList = Mst_imagelabel.objects.all()
+        imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
         #ページング処理
         page_obj = paginate_queryset(request, imagelabelList, pagecount)
 
