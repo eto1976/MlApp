@@ -17,6 +17,9 @@ def masterExecution(request):
     # 編集用CopyForm
     masterFormcopy = MasterForm(request.POST.copy())
 
+    # ラジオボタンチェックの取得
+    selectRadios = request.POST.get('selectRadios')
+
     msg=""
 
     # 検索ボタン押下時
@@ -53,9 +56,8 @@ def masterExecution(request):
         }
 
     # 修正ボタン押下時（画面遷移）
-    elif 'doEditDisp' in request.POST:
+    elif 'doEditDisp' in request.POST and selectRadios is not None:
         dispMode = 'edit'
-        selectRadios = request.POST.get('selectRadios')
         imagelabel_ct = []
         for objimagelabel in Mst_imagelabel.objects.filter(labelclass=selectRadios):
             imagelabel_ct.append(objimagelabel)
@@ -113,14 +115,23 @@ def masterExecution(request):
         }
 
     # 削除ボタン押下時
-    elif 'doDelete' in request.POST:
-        selectRadios = request.POST.get('selectRadios')
-        if selectRadios is None:
-            msg = "削除するデータを選択してください。"
-        else:
-            Mst_imagelabel.objects.filter(labelclass=selectRadios).delete()
-            msg = "削除が完了しました。"
+    elif 'doDelete' in request.POST and selectRadios is not None:
+        # 検索処理
+        imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
+        #ページング処理（第3引数が1ページの表示件数）
+        page_obj = paginate_queryset(request, imagelabelList, pagecount)
 
+        msg = "削除が完了しました。"
+        template = loader.get_template("master.html")
+        context = {
+            "imagelabelList": page_obj.object_list,
+            'page_obj': page_obj,
+            "msg": msg,
+        }
+
+    # ラジオ未選択時のエラー処理（おいおいJavaScriptで対応予定）
+    elif ('doEditDisp' in request.POST or 'doDelete' in request.POST) and selectRadios is None:
+        msg = "対象のデータを選択してください。"
         # 検索処理
         imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
         #ページング処理（第3引数が1ページの表示件数）
