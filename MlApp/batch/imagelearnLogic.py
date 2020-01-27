@@ -14,7 +14,7 @@ import numpy as np
 
 
 # 学習ファイル定義名
-modelFilePath = '/model/mlapp_model.json'
+modelFilePath = '/data/model/mlapp_model.json'
 h5File = 'mlapp_model_weights.h5'
 
 class ImagelearnLogic:
