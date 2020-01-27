@@ -25,6 +25,7 @@ class WebCrawlerLogic:
 
         # リソース取得
         WebCrawlerLogic.get_resource(html, extensions)
+        return "画像のクローリング処理が終了しました。"
 
     @staticmethod
     def get_resource(html, extensions):

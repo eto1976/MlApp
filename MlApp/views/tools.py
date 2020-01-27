@@ -14,8 +14,10 @@ def toolsExecution(request):
     formcopy = ToolsForm(request.POST.copy())
 
     url = form.data['sturlpath']
-    extensions = form.data['fileExtension']
     msg = form.data['msg']
+
+    #チェックボックスのリストの取得
+    extensions = request.POST.getlist("fileExtension")
 
     # 実行ボタン押下時
     if 'doExecute' in request.POST:
