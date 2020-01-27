@@ -14,15 +14,16 @@ class ToolsForm(forms.Form):
     sturlpath = forms.CharField(
         label='sturlpath',
         max_length=2083,
-        required=False,
+        required=True,
         widget=forms.TextInput(attrs={'class': "form-control"}),
 
     )
 
     fileExtension = forms.MultipleChoiceField(
         label='fileExtension',
-        required=False,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': "checkbox-inline"}), choices=CHOICES_1
+        choices=CHOICES_1,
+        required=True,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': "checkbox-inline"}),
     )
 
     msg = forms.CharField(
