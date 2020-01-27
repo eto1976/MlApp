@@ -24,8 +24,8 @@ class WebCrawlerLogic:
             return "HTMLが取得できませんでした、URLを確認してください。"
 
         # リソース取得
-        WebCrawlerLogic.get_resource(html, extensions)
-        return "画像のクローリング処理が終了しました。"
+        msg = WebCrawlerLogic.get_resource(html, extensions)
+        return msg
 
     @staticmethod
     def get_resource(html, extensions):
@@ -50,17 +50,23 @@ class WebCrawlerLogic:
                 pass
 
         resource_list = sorted(set(resource_list), key=resource_list.index)
-        for resource in resource_list:
-            try:
-                print("download ---> [%s]" % os.path.basename(resource))
-                request = urllib.request.urlopen(resource)
-                f = open(os.path.basename(resource), "wb")
-                f.write(request.read())
-            except Exception as e:
-                print(e)
-                print("download failed ... [%s]" % os.path.basename(resource))
-            finally:
-                time.sleep(3)
+        if len(resource_list) > 0:
+
+            for resource in resource_list:
+                try:
+                    print("download ---> [%s]" % os.path.basename(resource))
+                    request = urllib.request.urlopen(resource)
+                    f = open(os.path.basename(resource), "wb")
+                    f.write(request.read())
+                except Exception as e:
+                    print(e)
+                    print("download failed ... [%s]" % os.path.basename(resource))
+                finally:
+                    time.sleep(3)
+        else:
+            return "取得できる画像がありません。"
+
+        return "画像のクローリング処理が終了しました。"
 
     @staticmethod
     def get_html_string(url):
