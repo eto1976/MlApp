@@ -20,9 +20,11 @@ def toolsExecution(request):
     extensions = request.POST.getlist("fileExtension")
 
     # 実行ボタン押下時
-    if 'doExecute' in request.POST:
+    if 'doExecute' in request.POST and len(extensions)>0:
         # 画像クローリング処理
         msg = WebCrawlerLogic.crawring(url, extensions)
+    elif len(extensions) == 0:
+        msg = '拡張子を選択してください。'
 
     # メッセージをセット
     formcopy.data['msg'] = msg
