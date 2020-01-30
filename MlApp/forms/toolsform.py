@@ -4,11 +4,11 @@ from django import forms
 class ToolsForm(forms.Form):
 
     CHOICES_1 = [
-        ('jpg', 'jpg、jpeg'),
-        ('bmp', 'bmp'),
-        ('png', 'png'),
-        ('tiff', 'tiff'),
-        ('gif', 'gif'),
+        ('.jpg', 'jpg、jpeg'),
+        ('.bmp', 'bmp'),
+        ('.png', 'png'),
+        ('.tiff', 'tiff'),
+        ('.gif', 'gif'),
     ]
 
     sturlpath = forms.CharField(
