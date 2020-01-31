@@ -74,7 +74,7 @@ class WebCrawlerLogic:
             msg = "取得できる画像がありません。"
             return msg
 
-        msg = "画像のクローリング処理が終了しました。"
+        msg = msg + "画像のクローリング処理が終了しました。"
         return msg
 
     @staticmethod
