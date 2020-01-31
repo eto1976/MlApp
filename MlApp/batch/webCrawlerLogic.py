@@ -60,14 +60,14 @@ class WebCrawlerLogic:
             for resource in resource_list:
                 try:
                     print("ダウンロード実施 ---> [%s]" % os.path.basename(resource))
-                    msg = msg +"download ---> [%s]" % os.path.basename(resource) + "\n"
+                    msg = msg +"ダウンロード実施 ---> [%s]" % os.path.basename(resource) + "\n"
                     request = urllib.request.urlopen(resource)
                     f = open(os.path.basename(resource), "wb")
                     f.write(request.read())
                 except Exception as e:
                     print(e)
                     print("ダウンロード 失敗 ... [%s]" % os.path.basename(resource))
-                    msg = msg + "download failed ... [%s]" % os.path.basename(resource) + "\n"
+                    msg = msg + "ダウンロード 失敗 ... [%s]" % os.path.basename(resource) + e + "\n"
                 finally:
                     time.sleep(3)
         else:
