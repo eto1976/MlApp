@@ -16,7 +16,6 @@ class ToolsForm(forms.Form):
         max_length=2083,
         required=True,
         widget=forms.TextInput(attrs={'class': "form-control"}),
-
     )
 
     fileExtension = forms.MultipleChoiceField(

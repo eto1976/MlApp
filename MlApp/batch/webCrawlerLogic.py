@@ -41,14 +41,15 @@ class WebCrawlerLogic:
         resource_list = []
 
         # HTMLをsoupで取得後にaタグでループして、aタグ内のhrefを取得。リンク先画像の取得
+        # オリジナルソースのタグ(tag)は"a"で要素(element)は"href"
         soup = bs4.BeautifulSoup(html)
-        for a_tag in soup.find_all("a"):
-            href_str = a_tag.get("href")
+        for tag in soup.find_all("img"):
+            element = tag.get("src")
             try:
                 # 取得するHTML要素に対してファイル名(path)と拡張子(ext)に分割
-                (path, ext) = os.path.splitext(href_str)
+                (path, ext) = os.path.splitext(element)
                 if ext in extensions:
-                    resource_list.append(href_str)
+                    resource_list.append(element)
             except Exception as e:
                 print(e)
                 pass
