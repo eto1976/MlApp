@@ -67,7 +67,7 @@ class WebCrawlerLogic:
                 except Exception as e:
                     print(e)
                     print("ダウンロード 失敗 ... [%s]" % os.path.basename(resource))
-                    msg = msg + "ダウンロード 失敗 ... [%s]" % os.path.basename(resource) + e + "\n"
+                    msg = msg + "ダウンロード 失敗 ... [%s]" % os.path.basename(resource) + "\n"
                 finally:
                     time.sleep(3)
         else:
