@@ -37,6 +37,7 @@ class WebCrawlerLogic:
                 extensions    拡張子のリスト
         """
 
+        msg = ""
         resource_list = []
 
         # HTMLをsoupで取得後にaタグでループして、aタグ内のhrefを取得。リンク先画像の取得
@@ -57,19 +58,23 @@ class WebCrawlerLogic:
 
             for resource in resource_list:
                 try:
-                    print("download ---> [%s]" % os.path.basename(resource))
+                    print("ダウンロード実施 ---> [%s]" % os.path.basename(resource))
+                    msg = msg +"download ---> [%s]" % os.path.basename(resource) + "\n"
                     request = urllib.request.urlopen(resource)
                     f = open(os.path.basename(resource), "wb")
                     f.write(request.read())
                 except Exception as e:
                     print(e)
-                    print("download failed ... [%s]" % os.path.basename(resource))
+                    print("ダウンロード 失敗 ... [%s]" % os.path.basename(resource))
+                    msg = msg + "download failed ... [%s]" % os.path.basename(resource) + "\n"
                 finally:
                     time.sleep(3)
         else:
-            return "取得できる画像がありません。"
+            msg = "取得できる画像がありません。"
+            return msg
 
-        return "画像のクローリング処理が終了しました。"
+        msg = "画像のクローリング処理が終了しました。"
+        return msg
 
     @staticmethod
     def get_html_string(url):
