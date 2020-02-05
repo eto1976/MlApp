@@ -19,8 +19,8 @@ def toolsExecution(request):
     #チェックボックスのリストの取得
     extensions = request.POST.getlist("fileExtension")
 
-    # 実行ボタン押下時
-    if 'doExecute' in request.POST and len(extensions)>0:
+    # 実行ボタン押下時(ボタン名の判定は不要とした。)
+    if len(extensions)>0:
         # 画像クローリング処理
         msg = WebCrawlerLogic.crawring(url, extensions)
     elif len(extensions) == 0:

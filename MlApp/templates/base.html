@@ -45,6 +45,18 @@
     {% block content %}
     {% endblock %}
 
+	<!-- モーダル表示用 通常時は非常時 -->
+	<div id="hideModal" class="modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<img src="{% static 'img/Loading.gif' %}" alt="" />
+						<strong>Loading ...</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+
   </body>
 
 </html>
