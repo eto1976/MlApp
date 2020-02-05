@@ -21,7 +21,7 @@ $(function () {
 		return true;
 	});
 
-	// モーダル表示の際に中央に表示する処理（モーダル表示にフックされる処理）
+	// モーダル表示の際に中央に表示する処理
     $(".modal").on("show.bs.modal", function() {
         $(this).css("display", "block");
         var dialog = $(this).find(".modal-dialog");
