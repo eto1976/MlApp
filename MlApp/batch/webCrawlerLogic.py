@@ -2,12 +2,15 @@ import os
 import sys
 import time
 import urllib.request
+import ssl
+context = ssl.create_default_context()
 
 import bs4
 
+# ダウンロードパス
+dwFilePath = '"C:/Project/MlApp/data/dw/"'
 
 class WebCrawlerLogic:
-
     # パラメータ定義前提
     # self = url
     def crawring(self, extensions):
@@ -61,8 +64,8 @@ class WebCrawlerLogic:
                 try:
                     print("ダウンロード実施 ---> [%s]" % os.path.basename(resource))
                     msg = msg +"ダウンロード実施 ---> [%s]" % os.path.basename(resource) + "\n"
-                    request = urllib.request.urlopen(resource)
-                    f = open(os.path.basename(resource), "wb")
+                    request = urllib.request.urlopen(resource,context=context)
+                    f = open(dwFilePath + os.path.basename(resource), "wb")
                     f.write(request.read())
                 except Exception as e:
                     print(e)
@@ -74,7 +77,7 @@ class WebCrawlerLogic:
             msg = "取得できる画像がありません。"
             return msg
 
-        msg = msg + "画像のクローリング処理が終了しました。"
+        msg = msg + "画像のクローリング処理が終了しました。" + "\n" + dwFilePath
         return msg
 
     @staticmethod
