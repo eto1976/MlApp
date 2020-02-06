@@ -8,7 +8,7 @@ context = ssl.create_default_context()
 import bs4
 
 # ダウンロードパス
-dwFilePath = '"C:/Project/MlApp/data/dl/"'
+dwFilePath = 'C:/Project/MlApp/data/dl/'
 
 class WebCrawlerLogic:
     # パラメータ定義前提
