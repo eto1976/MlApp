@@ -72,7 +72,7 @@ class WebCrawlerLogic:
                     print("ダウンロード 失敗 ... [%s]" % os.path.basename(resource))
                     msg = msg + "ダウンロード 失敗 ... [%s]" % os.path.basename(resource) + "\n"
                 finally:
-                    time.sleep(3)
+                    time.sleep(1)
         else:
             msg = "取得できる画像がありません。"
             return msg
