@@ -1,14 +1,18 @@
+from django.conf import settings
 import os
 import sys
 import time
+import logging
 import urllib.request
 import ssl
 context = ssl.create_default_context()
 
 import bs4
 
+# ログ変数
+logger = logging.getLogger('command')
 # ダウンロードパス
-dwFilePath = 'C:/Project/MlApp/data/dl/'
+dwFilePath = getattr(settings, "MLAPP_DL_DIR", None)
 
 class WebCrawlerLogic:
     # パラメータ定義前提
@@ -59,25 +63,29 @@ class WebCrawlerLogic:
 
         resource_list = sorted(set(resource_list), key=resource_list.index)
         if len(resource_list) > 0:
+            successcount = 0
+            failurecount = 0
 
             for resource in resource_list:
                 try:
                     print("ダウンロード実施 ---> [%s]" % os.path.basename(resource))
-                    msg = msg +"ダウンロード実施 ---> [%s]" % os.path.basename(resource) + "\n"
+                    logger.info("ダウンロード実施 ---> [%s]" % os.path.basename(resource))
                     request = urllib.request.urlopen(resource,context=context)
                     f = open(dwFilePath + os.path.basename(resource), "wb")
                     f.write(request.read())
+                    successcount = successcount + 1
                 except Exception as e:
                     print(e)
                     print("ダウンロード 失敗 ... [%s]" % os.path.basename(resource))
-                    msg = msg + "ダウンロード 失敗 ... [%s]" % os.path.basename(resource) + "\n"
+                    logger.info("ダウンロード 失敗 ... [%s]" % os.path.basename(resource) + str(e))
+                    failurecount = failurecount + 1
                 finally:
                     time.sleep(1)
         else:
             msg = "取得できる画像がありません。"
             return msg
 
-        msg = msg + "画像のクローリング処理が終了しました。" + "\n" + dwFilePath
+        msg = "ダウンロード成功件数: " + str(successcount) + "件\n" + "ダウンロード失敗件数: " + str(failurecount) + "件\n" + "画像のクローリング処理が終了しました。" + "\n ダウンロードパス：" + dwFilePath
         return msg
 
     @staticmethod

@@ -60,6 +60,6 @@ class TopForm(forms.Form):
     msg = forms.CharField(
         label='msg',
         required=False,
-        widget=forms.Textarea(attrs={'class': "form-control",'readonly': 'true','rows':3,}),
+        widget=forms.Textarea(attrs={'class': "form-control",'readonly': 'true','rows':5,}),
     )
 
