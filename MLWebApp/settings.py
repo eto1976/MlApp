@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MLAPP_DIR = 'C:/Project/MlApp'
 LOG_DIR = MLAPP_DIR + '/logs/'
-MLAPP_DL_DIR = 'C:/Project/MlApp/data/dl/'
+MLAPP_DL_DIR = MLAPP_DIR + '/data/dl/'
 # BASE_DIR C:\\Users\\1506\\git\\MlApp
 
 # Quick-start development settings - unsuitable for production
