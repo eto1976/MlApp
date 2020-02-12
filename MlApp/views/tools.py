@@ -1,8 +1,14 @@
+import logging
+
 from django.http.response import HttpResponse
 from django.template import loader
 
 from MlApp.batch.webCrawlerLogic import WebCrawlerLogic
 from MlApp.forms.toolsform import ToolsForm
+
+
+# ログ変数
+logger = logging.getLogger('command')
 
 
 # 実行またはリロード処理

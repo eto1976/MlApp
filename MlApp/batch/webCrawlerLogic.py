@@ -1,13 +1,14 @@
-from django.conf import settings
+import logging
 import os
+import ssl
 import sys
 import time
-import logging
 import urllib.request
-import ssl
-context = ssl.create_default_context()
 
 import bs4
+from django.conf import settings
+
+context = ssl.create_default_context()
 
 # ログ変数
 logger = logging.getLogger('command')

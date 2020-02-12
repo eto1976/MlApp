@@ -1,3 +1,5 @@
+import logging
+
 from django.http.response import HttpResponse
 from django.template import loader
 
@@ -5,6 +7,9 @@ from MlApp.batch.imagelearnLogic import ImagelearnLogic
 from MlApp.forms.topform import TopForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
 
+
+# ログ変数
+logger = logging.getLogger('command')
 
 # 実行またはリロード処理
 def topExecution(request):

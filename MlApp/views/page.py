@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 def paginate_queryset(request, queryset, count):
     """Pageオブジェクトを返す。
 

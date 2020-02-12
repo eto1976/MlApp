@@ -1,10 +1,15 @@
+import logging
+
 from django.http.response import HttpResponse
 from django.template import loader
 
+from MlApp.forms.toolsform import ToolsForm
 from MlApp.forms.topform import TopForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
-from MlApp.forms.toolsform import ToolsForm
 
+
+# ログ変数
+logger = logging.getLogger('command')
 
 # タブ（Top）処理
 def tabmenuTop(request):

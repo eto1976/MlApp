@@ -1,3 +1,4 @@
+import logging
 import os
 
 from PIL import Image
@@ -12,6 +13,9 @@ from keras.utils.np_utils import to_categorical
 from MlApp.models.mstimagelabel import Mst_imagelabel
 import numpy as np
 
+
+# ログ変数
+logger = logging.getLogger('command')
 
 # 学習ファイル定義名
 modelFilePath = '/data/model/mlapp_model.json'

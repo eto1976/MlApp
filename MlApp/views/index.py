@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.http.response import HttpResponse
 from django.template import loader
@@ -10,6 +12,9 @@ from MlApp.models.mstuser import Mst_user
 
 # デバックモード取得
 debugMode = getattr(settings, "DEBUG", None)
+
+# ログ変数
+logger = logging.getLogger('command')
 
 # 初期表示
 def index(request):
@@ -52,6 +57,8 @@ def login(request):
 
         if len(userInfo) > 0 and userInfo[0].password == password :
             template = loader.get_template("top.html")
+            logger.info("ログインユーザ ... [%s]" % userInfo[0].username)
+
         else :
             template = loader.get_template("index.html")
             msg = "ユーザIDまたはパスワードが不正です。"

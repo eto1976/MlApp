@@ -1,3 +1,5 @@
+import logging
+
 from django.http.response import HttpResponse
 from django.template import loader
 
@@ -5,6 +7,9 @@ from MlApp.forms.masterform import MasterForm
 from MlApp.models.mstimagelabel import Mst_imagelabel
 from MlApp.views.page import paginate_queryset
 
+
+# ログ変数
+logger = logging.getLogger('command')
 
 # 1ページの表示件数
 pagecount = 5
