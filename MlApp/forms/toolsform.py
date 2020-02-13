@@ -11,11 +11,18 @@ class ToolsForm(forms.Form):
         ('.gif', 'gif'),
     ]
 
+    stkeyword = forms.CharField(
+        label='stkeyword',
+        max_length=2083,
+        required=True,
+        widget=forms.TextInput(attrs={'class': "form-control"}),
+    )
+
     sturlpath = forms.CharField(
         label='sturlpath',
         max_length=2083,
         required=True,
-        widget=forms.TextInput(attrs={'class': "form-control"}),
+        widget=forms.TextInput(attrs={'class': "form-control",'readonly': 'readonly'}),
     )
 
     fileExtension = forms.MultipleChoiceField(

@@ -45,9 +45,13 @@ $(function () {
 		        <div class="form-group">
 			        <h5>画像ファイル抽出機能</h5>
 		        </div>
-
 		        <div class="form-group">
-		        	<h5>クローリング用URL ※2083文字まで</h5>
+		        	<h5>検索ワード <BR>※ Goole画像検索ライブラリ使用の為、ブラウザ：chromeとchromedriverをサーバで導入済みが前提</h5>
+					{{ toolsForm.stkeyword }}
+		        </div>
+				<BR>
+		        <div class="form-group">
+		        	<h5>クローリング用URL ※URLからだと収集効率が悪い為、機能停止中</h5>
 					{{ toolsForm.sturlpath }}
 		        </div>
 				<BR>
