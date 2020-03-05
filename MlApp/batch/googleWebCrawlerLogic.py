@@ -34,11 +34,34 @@ httpsProxy = ""
 class GoogleWebCrawlerLogic:
 
     """Auto update web driver
-    getDriver = getChromeWebDriver.getChromeWebDriver()
-    getDriver.setTempDirectory("temp/") :
-    getDriver.upCheckChromeDriver("DrivwrPath")
+    getDriver.upCheckChromeDriver()
     """
+    def upCheckChromeDriver(self) :
+        """check chromeDriver Version
+        """
+        msg = ""
+        #ローカルのChormeバージョン取得
+        localversion = self.checkLocalChromeVersion()
 
+        fna = self.checkLatestChromeDriverVersion(localversion)
+        if fna == 0 :
+            logger.info("対象バージョンのChromeWebDriver取得エラー")
+            msg = "ChromeWebDriverが取得できません。"
+            return msg
+        furl = chromeDriverStorageUrl + fna + chromeDriverFileName
+        urllib.request.urlretrieve(furl, tempDirectory + "/howa1.zip")
+        with zipfile.ZipFile(tempDirectory + '/howa1.zip') as zipF:
+            zipF.extractall(driverFilePath)
+
+        majorVersion = re.search('^[0-9]*', fna)
+        #比較用のローカルクロームのバージョン保持　後でどこかにセット
+        localChromeDVersion = majorVersion.group()
+        logger.info("ChromeWebDriverローカルバージョン = " + localChromeDVersion )
+        msg = "ChromeWebDriverの更新が正常に終了しました。\n" + "ChromeWebDriverVersion = " + localChromeDVersion
+        return msg
+
+    # upCheckChromeDriverの内部メソッド
+    # ローカルのChromeDriverのバージョン取得
     def checkLocalChromeVersion(self) :
         """
         check Chrome Version (for Windows) check local Chrome Browser Version
@@ -60,6 +83,9 @@ class GoogleWebCrawlerLogic:
         # can't get Chrome Version return 0
         return version
 
+
+    # upCheckChromeDriverの内部メソッド
+    # Web上のローカルのChromeDriverの対象バージョン取得
     def checkLatestChromeDriverVersion(self, localChromeVersion) :
         """get chromeDriver Address for match local chrome version
         """
@@ -104,28 +130,4 @@ class GoogleWebCrawlerLogic:
             print("No Match Chrome Driver Version")
             return 0
         return mi
-
-    def upCheckChromeDriver(self) :
-        """check chromeDriver Version
-        """
-        msg = ""
-        #ローカルのChormeバージョン取得
-        localversion = self.checkLocalChromeVersion()
-
-        fna = self.checkLatestChromeDriverVersion(localversion)
-        if fna == 0 :
-            logger.info("対象バージョンのChromeWebDriver取得エラー")
-            msg = "ChromeWebDriverが取得できません。"
-            return msg
-        furl = chromeDriverStorageUrl + fna + chromeDriverFileName
-        urllib.request.urlretrieve(furl, tempDirectory + "/howa1.zip")
-        with zipfile.ZipFile(tempDirectory + '/howa1.zip') as zipF:
-            zipF.extractall(driverFilePath)
-
-        majorVersion = re.search('^[0-9]*', fna)
-        #比較用のローカルクロームのバージョン保持　後でどこかにセット
-        localChromeDVersion = majorVersion.group()
-        logger.info("ChromeWebDriverローカルバージョン = " + localChromeDVersion )
-        msg = "ChromeWebDriverの更新が正常に終了しました。\n" + "ChromeWebDriverVersion = " + localChromeDVersion
-        return msg
 
