@@ -18,6 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MLAPP_DIR = 'C:/Project/MlApp'
 LOG_DIR = MLAPP_DIR + '/logs/'
+DRIVER_DIR = MLAPP_DIR + '/driver/'
 MLAPP_DL_DIR = MLAPP_DIR + '/data/dl/'
 # BASE_DIR C:\\Users\\1506\\git\\MlApp
 

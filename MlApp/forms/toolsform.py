@@ -14,7 +14,7 @@ class ToolsForm(forms.Form):
     stkeyword = forms.CharField(
         label='stkeyword',
         max_length=2083,
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={'class': "form-control"}),
     )
 

@@ -4,6 +4,7 @@ from django.http.response import HttpResponse
 from django.template import loader
 
 from MlApp.batch.webCrawlerLogic import WebCrawlerLogic
+from MlApp.batch.googleWebCrawlerLogic import GoogleWebCrawlerLogic
 from MlApp.forms.toolsform import ToolsForm
 
 
@@ -22,15 +23,23 @@ def toolsExecution(request):
     url = form.data['sturlpath']
     msg = form.data['msg']
 
-    #チェックボックスのリストの取得
-    extensions = request.POST.getlist("fileExtension")
+    if 'doUpdate' in request.POST:
+    # chromedriverアップデート
+            # クロームドライバーアップデート（インスタンス化して利用）
+            googleWebCrawlerLogic = GoogleWebCrawlerLogic()
+            msg = googleWebCrawlerLogic.upCheckChromeDriver()
 
-    # 実行ボタン押下時(ボタン名の判定は不要とした。)
-    if len(extensions)>0:
-        # 画像クローリング処理
-        msg = WebCrawlerLogic.crawring(url, extensions)
-    elif len(extensions) == 0:
-        msg = '拡張子を選択してください。'
+    else:
+    # クローリング処理（Ajax実施の為、ボタン名がない判定で処理実行）
+        #チェックボックスのリストの取得
+        extensions = request.POST.getlist("fileExtension")
+
+        # 実行ボタン押下時(ボタン名の判定は不要とした。)
+        if len(extensions)>0:
+            # 画像クローリング処理
+            msg = WebCrawlerLogic.crawring(url, extensions)
+        elif len(extensions) == 0:
+            msg = '拡張子を選択してください。'
 
     # メッセージをセット
     formcopy.data['msg'] = msg
