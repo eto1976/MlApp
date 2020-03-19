@@ -13,7 +13,7 @@ context = ssl.create_default_context()
 # ログ変数
 logger = logging.getLogger('command')
 # ダウンロードパス
-dwFilePath = getattr(settings, "MLAPP_DL_DIR", None)
+dwFilePath = getattr(settings, "DL_DIR", None)
 
 class WebCrawlerLogic:
     # パラメータ定義前提

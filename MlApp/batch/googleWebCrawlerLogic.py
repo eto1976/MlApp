@@ -14,6 +14,8 @@ context = ssl.create_default_context()
 logger = logging.getLogger('command')
 # ChromeWebDriverのパス
 driverFilePath = getattr(settings, "DRIVER_DIR", None)
+# tmpのパス
+tempDirectoryPath = getattr(settings, "TMP_DIR", None)
 # Chrome driver URL
 chromeDriverUrl = "https://chromedriver.chromium.org/downloads"
 # Chrome driver URL
@@ -22,8 +24,6 @@ chromeDriverStorageUrl = "https://chromedriver.storage.googleapis.com/"
 chromeDriverFileName = "/chromedriver_win32.zip"
 # Chrome ApplicationFolder Path
 chromePath = "C:/Program Files (x86)/Google/Chrome/Application"
-# temp Directory
-tempDirectory = "C:/temp"
 # Use Proxy Flag
 useProxy = "false"
 # httpProxy
@@ -49,8 +49,8 @@ class GoogleWebCrawlerLogic:
             msg = "ChromeWebDriverが取得できません。"
             return msg
         furl = chromeDriverStorageUrl + fna + chromeDriverFileName
-        urllib.request.urlretrieve(furl, tempDirectory + "/howa1.zip")
-        with zipfile.ZipFile(tempDirectory + '/howa1.zip') as zipF:
+        urllib.request.urlretrieve(furl, tempDirectoryPath + "/howa1.zip")
+        with zipfile.ZipFile(tempDirectoryPath + '/howa1.zip') as zipF:
             zipF.extractall(driverFilePath)
 
         majorVersion = re.search('^[0-9]*', fna)
