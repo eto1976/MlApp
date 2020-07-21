@@ -121,6 +121,9 @@ def masterExecution(request):
 
     # 削除ボタン押下時
     elif 'doDelete' in request.POST and selectRadios is not None:
+
+        #削除処理
+        Mst_imagelabel.objects.filter(labelclass=selectRadios).delete()
         # 検索処理
         imagelabelList = Mst_imagelabel.objects.all().order_by('labelclass')
         #ページング処理（第3引数が1ページの表示件数）
