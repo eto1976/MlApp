@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 from urllib.request import URLError, HTTPError
 from urllib.parse import quote
 import http.client
-# IncompleteRead, BadStatusLineはhttp.clientに存在するが、なぜがEclipseでエラーとなる為、以下の方法で回避
+# IncompleteRead, BadStatusLineはhttp.clientに存在するが、Eclipseでエラーとなる(対象ライブラリが入れ子である場合)、以下の方法で回避
 from http.client import IncompleteRead, BadStatusLine  # @UnresolvedImport
 http.client._MAXHEADERS = 1000
 import time  # Importing the time library to check the time of code execution
